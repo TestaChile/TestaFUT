@@ -2,7 +2,7 @@ body {
     font-family: Arial, sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #f4f4f4;
+    background-color: #f4f4f9;
 }
 
 .container {
@@ -10,27 +10,47 @@ body {
     margin: 0 auto;
     background: white;
     padding: 20px;
-    border-radius: 8px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2, h3 {
+h1, h2, h3, h4 {
     color: #333;
 }
 
 .form-section, .players-section, .matches-section {
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
+}
+
+.day-group {
+    margin-bottom: 15px;
+    border: 1px solid #e0e0e0;
     padding: 15px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 
-.days, .hours {
-    margin: 10px 0;
+.day-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
 }
 
-label {
-    margin-right: 10px;
+.time-slots {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+}
+
+.time-slots label {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    font-size: 14px;
+    cursor: pointer;
 }
 
 button {
@@ -40,24 +60,70 @@ button {
     padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
+    transition: background 0.3s;
 }
 
 button:hover {
     background: #218838;
 }
 
-table {
-    width: 100%;
-    border-collapse: collapse;
-    margin-top: 10px;
+.select-all {
+    background: #6c757d;
+    font-size: 12px;
+    padding: 5px 10px;
 }
 
-th, td {
-    border: 1px solid #ddd;
-    padding: 8px;
-    text-align: left;
+.select-all:hover {
+    background: #5a6268;
 }
 
-th {
-    background-color: #f2f2f2;
+#matchesList {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 15px;
+}
+
+.match-card {
+    background: #f8f9fa;
+    border: 1px solid #dee2e6;
+    border-radius: 8px;
+    padding: 15px;
+    position: relative;
+}
+
+.match-card h3 {
+    margin-top: 0;
+    color: #2c3e50;
+}
+
+.match-card .players {
+    margin: 10px 0;
+    font-size: 14px;
+}
+
+.match-card .status {
+    display: inline-block;
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-weight: bold;
+    font-size: 13px;
+}
+
+.status.quorum {
+    background: #ffeeba;
+    color: #856404;
+}
+
+.status.ready {
+    background: #d4edda;
+    color: #155724;
+}
+
+.status.full {
+    background: #d1ecf1;
+    color: #0c5460;
+}
+
+.fa-users {
+    margin-right: 5px;
 }
