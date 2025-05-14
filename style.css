@@ -30,11 +30,11 @@ body {
 }
 
 .compact-calendar {
-    margin: 5px 0;
+    margin: 10px 0;
 }
 
 .day-collapsible {
-    margin-bottom: 0px;
+    margin-bottom: 0;
 }
 
 .collapse-btn {
@@ -44,7 +44,7 @@ body {
     background: #3498db;
     color: white;
     border: none;
-    border-radius: 5px;
+    border-radius: 0;
     cursor: pointer;
     border-bottom: 1px solid #2980b9;
 }
@@ -53,7 +53,8 @@ body {
     display: none;
     padding: 10px;
     background: #f8f9fa;
-    border-radius: 5px;
+    border-radius: 0 0 5px 5px;
+    margin-bottom: 5px;
 }
 
 .day-slots label {
@@ -63,13 +64,33 @@ body {
 }
 
 #playersList {
-    list-style: none;
-    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px 10px;
+    align-items: center;
 }
 
-#playersList li {
-    padding: 8px;
-    border-bottom: 1px solid #eee;
+.player-name {
+    display: inline;
+}
+
+.player-name::after {
+    content: " -";
+    color: #555;
+}
+
+.player-name:last-child::after {
+    content: "";
+}
+
+.player-name.bold {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.player-name.normal {
+    font-weight: normal;
+    color: #7f8c8d;
 }
 
 button {
@@ -90,7 +111,14 @@ button {
     color: white;
 }
 
-/* Efectos hover */
-#addPlayer:hover { background: #27ae60; }
-#resetData:hover { background: #c0392b; }
-.collapse-btn:hover { background: #2980b9; }
+#addPlayer:hover {
+    background: #27ae60;
+}
+
+#resetData:hover {
+    background: #c0392b;
+}
+
+.collapse-btn:hover {
+    background: #2980b9;
+}
