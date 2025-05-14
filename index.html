@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Organizador de Partidos de Fútbol</title>
+    <title>Organizador de Partidos</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
@@ -11,101 +11,40 @@
     <div class="container">
         <h1>⚽ Organizador de Partidos</h1>
         
-        <!-- Formulario para agregar jugadores -->
+        <!-- Contador de jugadores -->
+        <div class="counter">
+            <span id="countText">¡Faltan 12 jugadores!</span>
+            <span id="matchStatus"></span>
+        </div>
+
+        <!-- Formulario compacto -->
         <div class="form-section">
             <h2>Agregar Jugador</h2>
-            <input type="text" id="playerName" placeholder="Nombre del jugador" required>
+            <input type="text" id="playerName" placeholder="Nombre" required>
             
-            <h3>Horarios Disponibles</h3>
-            <!-- Lunes -->
-            <div class="day-group">
-                <div class="day-header">
-                    <h4>Lunes</h4>
-                    <button class="select-all" data-day="monday">Seleccionar todos</button>
+            <div class="compact-calendar">
+                <div class="day-collapsible">
+                    <button class="collapse-btn">Lunes ▼</button>
+                    <div class="day-slots">
+                        <label><input type="checkbox" name="monday" value="13:00-14:00"> 13:00-14:00</label>
+                        <label><input type="checkbox" name="monday" value="14:00-15:00"> 14:00-15:00</label>
+                        <!-- ... (agrega todos los slots del lunes) -->
+                    </div>
                 </div>
-                <div class="time-slots" id="monday-slots">
-                    <!-- Bloques horarios generados por JavaScript -->
-                </div>
+                <!-- Repite para los otros días (martes a domingo) -->
             </div>
             
-            <!-- Martes -->
-            <div class="day-group">
-                <div class="day-header">
-                    <h4>Martes</h4>
-                    <button class="select-all" data-day="tuesday">Seleccionar todos</button>
-                </div>
-                <div class="time-slots" id="tuesday-slots"></div>
-            </div>
-            
-            <!-- Miércoles -->
-            <div class="day-group">
-                <div class="day-header">
-                    <h4>Miércoles</h4>
-                    <button class="select-all" data-day="wednesday">Seleccionar todos</button>
-                </div>
-                <div class="time-slots" id="wednesday-slots"></div>
-            </div>
-            
-            <!-- Jueves -->
-            <div class="day-group">
-                <div class="day-header">
-                    <h4>Jueves</h4>
-                    <button class="select-all" data-day="thursday">Seleccionar todos</button>
-                </div>
-                <div class="time-slots" id="thursday-slots"></div>
-            </div>
-            
-            <!-- Viernes -->
-            <div class="day-group">
-                <div class="day-header">
-                    <h4>Viernes</h4>
-                    <button class="select-all" data-day="friday">Seleccionar todos</button>
-                </div>
-                <div class="time-slots" id="friday-slots"></div>
-            </div>
-            
-            <!-- Sábado -->
-            <div class="day-group">
-                <div class="day-header">
-                    <h4>Sábado</h4>
-                    <button class="select-all" data-day="saturday">Seleccionar todos</button>
-                </div>
-                <div class="time-slots" id="saturday-slots"></div>
-            </div>
-            
-            <!-- Domingo -->
-            <div class="day-group">
-                <div class="day-header">
-                    <h4>Domingo</h4>
-                    <button class="select-all" data-day="sunday">Seleccionar todos</button>
-                </div>
-                <div class="time-slots" id="sunday-slots"></div>
-            </div>
-            
-            <button id="addPlayer">Agregar Jugador</button>
+            <button id="addPlayer">Agregar</button>
+            <button id="resetData">Reiniciar</button>
         </div>
-        
-        <!-- Tabla de jugadores -->
+
+        <!-- Lista de jugadores (solo nombres) -->
         <div class="players-section">
-            <h2>👥 Jugadores Registrados</h2>
-            <table id="playersTable">
-                <thead>
-                    <tr>
-                        <th>Nombre</th>
-                        <th>Horarios</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
-        </div>
-        
-        <!-- Partidos posibles -->
-        <div class="matches-section">
-            <h2>📅 Partidos Posibles</h2>
-            <div id="matchesList"></div> <!-- Lista dinámica generada por JS -->
+            <h2>👥 Jugadores Registrados: <span id="totalPlayers">0</span></h2>
+            <ul id="playersList"></ul>
         </div>
     </div>
-    
+
     <script src="script.js"></script>
 </body>
 </html>
