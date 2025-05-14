@@ -1,39 +1,67 @@
 document.addEventListener('DOMContentLoaded', function() {
     const players = [];
-    
+    const days = [
+        { id: 'monday', name: 'Lunes', slots: ['13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', '22:00-23:00'] },
+        { id: 'tuesday', name: 'Martes', slots: ['9:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', '22:00-23:00'] },
+        { id: 'wednesday', name: 'Miércoles', slots: ['9:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', '22:00-23:00'] },
+        { id: 'thursday', name: 'Jueves', slots: ['9:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', '22:00-23:00'] },
+        { id: 'friday', name: 'Viernes', slots: ['9:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', '22:00-23:00'] },
+        { id: 'saturday', name: 'Sábado', slots: ['9:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', '22:00-23:00'] },
+        { id: 'sunday', name: 'Domingo', slots: ['9:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', '22:00-23:00'] }
+    ];
+
+    // Generar checkboxes para cada día
+    days.forEach(day => {
+        const container = document.getElementById(`${day.id}-slots`);
+        day.slots.forEach(slot => {
+            const label = document.createElement('label');
+            label.innerHTML = `
+                <input type="checkbox" name="${day.id}" value="${slot}">
+                ${slot}
+            `;
+            container.appendChild(label);
+        });
+    });
+
+    // Seleccionar todos los horarios de un día
+    document.querySelectorAll('.select-all').forEach(button => {
+        button.addEventListener('click', function() {
+            const day = this.getAttribute('data-day');
+            const checkboxes = document.querySelectorAll(`input[name="${day}"]`);
+            const allChecked = Array.from(checkboxes).every(cb => cb.checked);
+            
+            checkboxes.forEach(cb => {
+                cb.checked = !allChecked;
+            });
+        });
+    });
+
     // Agregar jugador
     document.getElementById('addPlayer').addEventListener('click', function() {
         const name = document.getElementById('playerName').value.trim();
         if (!name) {
-            alert('Por favor ingresa un nombre.');
+            alert('Ingresa tu nombre');
             return;
         }
-        
-        const days = Array.from(document.querySelectorAll('.day-selector:checked')).map(el => el.value);
-        const startHour = parseInt(document.getElementById('startHour').value);
-        const endHour = parseInt(document.getElementById('endHour').value);
-        
-        if (days.length === 0 || startHour >= endHour) {
-            alert('Selecciona al menos un día y un rango de horas válido.');
+
+        const availability = [];
+        document.querySelectorAll('.time-slots input[type="checkbox"]:checked').forEach(checkbox => {
+            const day = checkbox.name;
+            const time = checkbox.value;
+            availability.push({ day, time });
+        });
+
+        if (availability.length === 0) {
+            alert('Selecciona al menos un horario');
             return;
         }
-        
-        const player = {
-            name,
-            days,
-            startHour,
-            endHour
-        };
-        
-        players.push(player);
+
+        players.push({ name, availability });
         updatePlayersTable();
-        updateMatchesTable();
-        
-        // Limpiar formulario
+        updateMatchesList();
         document.getElementById('playerName').value = '';
-        document.querySelectorAll('.day-selector').forEach(cb => cb.checked = false);
     });
-    
+
     // Actualizar tabla de jugadores
     function updatePlayersTable() {
         const tbody = document.querySelector('#playersTable tbody');
@@ -41,70 +69,77 @@ document.addEventListener('DOMContentLoaded', function() {
         
         players.forEach(player => {
             const row = document.createElement('tr');
-            
             const nameCell = document.createElement('td');
             nameCell.textContent = player.name;
             
-            const hoursCell = document.createElement('td');
-            hoursCell.textContent = `${player.days.join(', ')}: ${player.startHour}:00 - ${player.endHour}:00`;
+            const slotsCell = document.createElement('td');
+            const slotsByDay = {};
             
+            player.availability.forEach(slot => {
+                if (!slotsByDay[slot.day]) slotsByDay[slot.day] = [];
+                slotsByDay[slot.day].push(slot.time);
+            });
+            
+            let slotsText = '';
+            Object.keys(slotsByDay).forEach(day => {
+                const dayName = days.find(d => d.id === day).name;
+                slotsText += `${dayName}: ${slotsByDay[day].join(', ')}\n`;
+            });
+            
+            slotsCell.textContent = slotsText;
             row.appendChild(nameCell);
-            row.appendChild(hoursCell);
+            row.appendChild(slotsCell);
             tbody.appendChild(row);
         });
     }
-    
-    // Actualizar tabla de partidos posibles
-    function updateMatchesTable() {
-        const tbody = document.querySelector('#matchesTable tbody');
-        tbody.innerHTML = '';
+
+    // Actualizar lista de partidos posibles
+    function updateMatchesList() {
+        const matchesList = document.getElementById('matchesList');
+        matchesList.innerHTML = '';
         
-        // Generar todos los slots posibles (día + hora)
-        const days = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'];
-        const timeSlots = [];
-        
+        // Agrupar disponibilidad por día y hora
+        const timeSlots = {};
         days.forEach(day => {
-            for (let hour = 9; hour <= 22; hour++) {
-                timeSlots.push({ day, hour });
-            }
+            day.slots.forEach(slot => {
+                const key = `${day.name} - ${slot}`;
+                timeSlots[key] = players.filter(player => 
+                    player.availability.some(av => 
+                        av.day === day.id && av.time === slot
+                    )
+                );
+            });
         });
-        
-        // Para cada slot, ver cuántos jugadores están disponibles
-        timeSlots.forEach(slot => {
-            const availablePlayers = players.filter(player => 
-                player.days.includes(slot.day) && 
-                slot.hour >= player.startHour && 
-                slot.hour < player.endHour
-            );
-            
-            if (availablePlayers.length >= 6) {
-                const row = document.createElement('tr');
+
+        // Mostrar solo slots con al menos 6 jugadores
+        Object.keys(timeSlots).forEach(slot => {
+            const playersInSlot = timeSlots[slot];
+            if (playersInSlot.length >= 6) {
+                const matchCard = document.createElement('div');
+                matchCard.className = 'match-card';
                 
-                const slotCell = document.createElement('td');
-                slotCell.textContent = `${slot.day}, ${slot.hour}:00 - ${slot.hour + 1}:00`;
-                
-                const playersCell = document.createElement('td');
-                playersCell.textContent = availablePlayers.map(p => p.name).join(', ');
-                
-                const statusCell = document.createElement('td');
-                if (availablePlayers.length >= 12) {
-                    statusCell.textContent = 'Partido 6x6';
-                    statusCell.style.color = 'green';
-                } else if (availablePlayers.length >= 14) {
-                    statusCell.textContent = 'Partido 7x7';
-                    statusCell.style.color = 'darkgreen';
-                } else if (availablePlayers.length >= 6) {
-                    statusCell.textContent = 'Partido posible (menos de 6x6)';
-                    statusCell.style.color = 'orange';
+                let statusClass, statusText;
+                if (playersInSlot.length >= 12) {
+                    statusClass = 'full';
+                    statusText = '6x6 COMPLETO';
+                } else if (playersInSlot.length >= 10) {
+                    statusClass = 'ready';
+                    statusText = '6x6 POSIBLE';
                 } else {
-                    statusCell.textContent = 'Falta quórum';
-                    statusCell.style.color = 'red';
+                    statusClass = 'quorum';
+                    statusText = 'FALTA QUÓRUM';
                 }
                 
-                row.appendChild(slotCell);
-                row.appendChild(playersCell);
-                row.appendChild(statusCell);
-                tbody.appendChild(row);
+                matchCard.innerHTML = `
+                    <h3>${slot}</h3>
+                    <div class="players">
+                        <i class="fas fa-users"></i> 
+                        ${playersInSlot.map(p => p.name).join(', ')}
+                    </div>
+                    <span class="status ${statusClass}">${statusText} (${playersInSlot.length} jugadores)</span>
+                `;
+                
+                matchesList.appendChild(matchCard);
             }
         });
     }
