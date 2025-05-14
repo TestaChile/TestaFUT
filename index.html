@@ -5,10 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Organizador de Partidos de Fútbol</title>
     <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
 </head>
 <body>
     <div class="container">
-        <h1>Organizador de Partidos</h1>
+        <h1>⚽ Organizador de Partidos</h1>
         
         <!-- Formulario para agregar jugadores -->
         <div class="form-section">
@@ -16,65 +17,92 @@
             <input type="text" id="playerName" placeholder="Nombre del jugador" required>
             
             <h3>Horarios Disponibles</h3>
-            <div class="days">
-                <label><input type="checkbox" class="day-selector" value="Lunes"> Lunes</label>
-                <label><input type="checkbox" class="day-selector" value="Martes"> Martes</label>
-                <label><input type="checkbox" class="day-selector" value="Miércoles"> Miércoles</label>
-                <label><input type="checkbox" class="day-selector" value="Jueves"> Jueves</label>
-                <label><input type="checkbox" class="day-selector" value="Viernes"> Viernes</label>
-                <label><input type="checkbox" class="day-selector" value="Sábado"> Sábado</label>
-                <label><input type="checkbox" class="day-selector" value="Domingo"> Domingo</label>
+            <!-- Lunes -->
+            <div class="day-group">
+                <div class="day-header">
+                    <h4>Lunes</h4>
+                    <button class="select-all" data-day="monday">Seleccionar todos</button>
+                </div>
+                <div class="time-slots" id="monday-slots">
+                    <!-- Bloques horarios generados por JavaScript -->
+                </div>
             </div>
             
-            <div class="hours">
-                <label>Horario: 
-                    <select id="startHour">
-                        <option value="9">9:00 AM</option>
-                        <option value="10">10:00 AM</option>
-                        <!-- ... -->
-                        <option value="22">10:00 PM</option>
-                        <option value="23">11:00 PM</option>
-                    </select>
-                    hasta
-                    <select id="endHour">
-                        <option value="10">10:00 AM</option>
-                        <option value="11">11:00 AM</option>
-                        <!-- ... -->
-                        <option value="23">11:00 PM</option>
-                    </select>
-                </label>
+            <!-- Martes -->
+            <div class="day-group">
+                <div class="day-header">
+                    <h4>Martes</h4>
+                    <button class="select-all" data-day="tuesday">Seleccionar todos</button>
+                </div>
+                <div class="time-slots" id="tuesday-slots"></div>
+            </div>
+            
+            <!-- Miércoles -->
+            <div class="day-group">
+                <div class="day-header">
+                    <h4>Miércoles</h4>
+                    <button class="select-all" data-day="wednesday">Seleccionar todos</button>
+                </div>
+                <div class="time-slots" id="wednesday-slots"></div>
+            </div>
+            
+            <!-- Jueves -->
+            <div class="day-group">
+                <div class="day-header">
+                    <h4>Jueves</h4>
+                    <button class="select-all" data-day="thursday">Seleccionar todos</button>
+                </div>
+                <div class="time-slots" id="thursday-slots"></div>
+            </div>
+            
+            <!-- Viernes -->
+            <div class="day-group">
+                <div class="day-header">
+                    <h4>Viernes</h4>
+                    <button class="select-all" data-day="friday">Seleccionar todos</button>
+                </div>
+                <div class="time-slots" id="friday-slots"></div>
+            </div>
+            
+            <!-- Sábado -->
+            <div class="day-group">
+                <div class="day-header">
+                    <h4>Sábado</h4>
+                    <button class="select-all" data-day="saturday">Seleccionar todos</button>
+                </div>
+                <div class="time-slots" id="saturday-slots"></div>
+            </div>
+            
+            <!-- Domingo -->
+            <div class="day-group">
+                <div class="day-header">
+                    <h4>Domingo</h4>
+                    <button class="select-all" data-day="sunday">Seleccionar todos</button>
+                </div>
+                <div class="time-slots" id="sunday-slots"></div>
             </div>
             
             <button id="addPlayer">Agregar Jugador</button>
         </div>
         
-        <!-- Tabla de jugadores y horarios -->
+        <!-- Tabla de jugadores -->
         <div class="players-section">
-            <h2>Jugadores Registrados</h2>
+            <h2>👥 Jugadores Registrados</h2>
             <table id="playersTable">
                 <thead>
                     <tr>
                         <th>Nombre</th>
-                        <th>Horarios Disponibles</th>
+                        <th>Horarios</th>
                     </tr>
                 </thead>
                 <tbody></tbody>
             </table>
         </div>
         
-        <!-- Resultados de partidos posibles -->
+        <!-- Partidos posibles -->
         <div class="matches-section">
-            <h2>Partidos Posibles</h2>
-            <table id="matchesTable">
-                <thead>
-                    <tr>
-                        <th>Día y Hora</th>
-                        <th>Jugadores Disponibles</th>
-                        <th>Estado</th>
-                    </tr>
-                </thead>
-                <tbody></tbody>
-            </table>
+            <h2>📅 Partidos Posibles</h2>
+            <div id="matchesList"></div> <!-- Lista dinámica generada por JS -->
         </div>
     </div>
     
