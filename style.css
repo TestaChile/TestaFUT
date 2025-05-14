@@ -30,11 +30,11 @@ body {
 }
 
 .compact-calendar {
-    margin: 10px 0;
+    margin: 5px 0;
 }
 
 .day-collapsible {
-    margin-bottom: 1px;
+    margin-bottom: 0px;
 }
 
 .collapse-btn {
