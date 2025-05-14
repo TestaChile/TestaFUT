@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Organizador de Partidos de Fútbol</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Organizador de Partidos</h1>
+        
+        <!-- Formulario para agregar jugadores -->
+        <div class="form-section">
+            <h2>Agregar Jugador</h2>
+            <input type="text" id="playerName" placeholder="Nombre del jugador" required>
+            
+            <h3>Horarios Disponibles</h3>
+            <div class="days">
+                <label><input type="checkbox" class="day-selector" value="Lunes"> Lunes</label>
+                <label><input type="checkbox" class="day-selector" value="Martes"> Martes</label>
+                <label><input type="checkbox" class="day-selector" value="Miércoles"> Miércoles</label>
+                <label><input type="checkbox" class="day-selector" value="Jueves"> Jueves</label>
+                <label><input type="checkbox" class="day-selector" value="Viernes"> Viernes</label>
+                <label><input type="checkbox" class="day-selector" value="Sábado"> Sábado</label>
+                <label><input type="checkbox" class="day-selector" value="Domingo"> Domingo</label>
+            </div>
+            
+            <div class="hours">
+                <label>Horario: 
+                    <select id="startHour">
+                        <option value="9">9:00 AM</option>
+                        <option value="10">10:00 AM</option>
+                        <!-- ... -->
+                        <option value="22">10:00 PM</option>
+                        <option value="23">11:00 PM</option>
+                    </select>
+                    hasta
+                    <select id="endHour">
+                        <option value="10">10:00 AM</option>
+                        <option value="11">11:00 AM</option>
+                        <!-- ... -->
+                        <option value="23">11:00 PM</option>
+                    </select>
+                </label>
+            </div>
+            
+            <button id="addPlayer">Agregar Jugador</button>
+        </div>
+        
+        <!-- Tabla de jugadores y horarios -->
+        <div class="players-section">
+            <h2>Jugadores Registrados</h2>
+            <table id="playersTable">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Horarios Disponibles</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+        
+        <!-- Resultados de partidos posibles -->
+        <div class="matches-section">
+            <h2>Partidos Posibles</h2>
+            <table id="matchesTable">
+                <thead>
+                    <tr>
+                        <th>Día y Hora</th>
+                        <th>Jugadores Disponibles</th>
+                        <th>Estado</th>
+                    </tr>
+                </thead>
+                <tbody></tbody>
+            </table>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
