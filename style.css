@@ -6,124 +6,85 @@ body {
 }
 
 .container {
-    max-width: 1000px;
+    max-width: 600px;
     margin: 0 auto;
     background: white;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-h1, h2, h3, h4 {
-    color: #333;
+.counter {
+    background: #2c3e50;
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+    text-align: center;
+    margin-bottom: 20px;
 }
 
-.form-section, .players-section, .matches-section {
-    margin-bottom: 25px;
-    padding: 20px;
-    border: 1px solid #e0e0e0;
-    border-radius: 8px;
+#matchStatus {
+    display: block;
+    font-weight: bold;
+    margin-top: 5px;
 }
 
-.day-group {
-    margin-bottom: 15px;
-    border: 1px solid #e0e0e0;
-    padding: 15px;
-    border-radius: 8px;
+.compact-calendar {
+    margin: 10px 0;
 }
 
-.day-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 10px;
+.day-collapsible {
+    margin-bottom: 5px;
 }
 
-.time-slots {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 10px;
-}
-
-.time-slots label {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-    font-size: 14px;
+.collapse-btn {
+    width: 100%;
+    padding: 8px;
+    text-align: left;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
     cursor: pointer;
+}
+
+.day-slots {
+    display: none;
+    padding: 10px;
+    background: #f8f9fa;
+    border-radius: 5px;
+}
+
+.day-slots label {
+    display: inline-block;
+    margin: 5px;
+    font-size: 14px;
+}
+
+#playersList {
+    list-style: none;
+    padding: 0;
+}
+
+#playersList li {
+    padding: 8px;
+    border-bottom: 1px solid #eee;
 }
 
 button {
-    background: #28a745;
-    color: white;
+    margin-top: 10px;
+    padding: 8px 15px;
     border: none;
-    padding: 10px 15px;
     border-radius: 5px;
     cursor: pointer;
-    transition: background 0.3s;
 }
 
-button:hover {
-    background: #218838;
+#addPlayer {
+    background: #2ecc71;
+    color: white;
 }
 
-.select-all {
-    background: #6c757d;
-    font-size: 12px;
-    padding: 5px 10px;
-}
-
-.select-all:hover {
-    background: #5a6268;
-}
-
-#matchesList {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 15px;
-}
-
-.match-card {
-    background: #f8f9fa;
-    border: 1px solid #dee2e6;
-    border-radius: 8px;
-    padding: 15px;
-    position: relative;
-}
-
-.match-card h3 {
-    margin-top: 0;
-    color: #2c3e50;
-}
-
-.match-card .players {
-    margin: 10px 0;
-    font-size: 14px;
-}
-
-.match-card .status {
-    display: inline-block;
-    padding: 5px 10px;
-    border-radius: 15px;
-    font-weight: bold;
-    font-size: 13px;
-}
-
-.status.quorum {
-    background: #ffeeba;
-    color: #856404;
-}
-
-.status.ready {
-    background: #d4edda;
-    color: #155724;
-}
-
-.status.full {
-    background: #d1ecf1;
-    color: #0c5460;
-}
-
-.fa-users {
-    margin-right: 5px;
+#resetData {
+    background: #e74c3c;
+    color: white;
 }
