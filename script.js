@@ -1,20 +1,17 @@
 document.addEventListener('DOMContentLoaded', function() {
     const players = JSON.parse(localStorage.getItem('players')) || [];
     const lastResetDay = localStorage.getItem('lastResetDay');
-    const today = new Date().getDay(); // 0 (domingo) a 6 (sábado)
+    const today = new Date().getDay();
 
-    // Reiniciar datos si es domingo y no se ha reiniciado hoy
     if (today === 0 && lastResetDay !== '0') {
         localStorage.setItem('players', JSON.stringify([]));
         localStorage.setItem('lastResetDay', '0');
         window.location.reload();
     }
 
-    // Actualizar interfaz
     updatePlayersList();
     updateCounter();
 
-    // Colapsar/expandir días
     document.querySelectorAll('.collapse-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const slots = this.nextElementSibling;
@@ -25,7 +22,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Agregar jugador
     document.getElementById('addPlayer').addEventListener('click', function() {
         const name = document.getElementById('playerName').value.trim();
         if (!name) {
@@ -54,7 +50,6 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('playerName').value = '';
     });
 
-    // Reiniciar datos manualmente
     document.getElementById('resetData').addEventListener('click', function() {
         if (confirm('¿Borrar todos los jugadores?')) {
             localStorage.setItem('players', JSON.stringify([]));
@@ -62,19 +57,20 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Actualizar lista de jugadores
     function updatePlayersList() {
         const list = document.getElementById('playersList');
         list.innerHTML = '';
-        players.forEach(player => {
-            const li = document.createElement('li');
-            li.textContent = player.name;
-            list.appendChild(li);
+        
+        players.forEach((player, index) => {
+            const span = document.createElement('span');
+            span.className = `player-name ${index % 2 === 0 ? 'bold' : 'normal'}`;
+            span.textContent = player.name;
+            list.appendChild(span);
         });
+        
         document.getElementById('totalPlayers').textContent = players.length;
     }
 
-    // Actualizar contador y estado del partido
     function updateCounter() {
         const remaining = 12 - players.length;
         const countText = document.getElementById('countText');
@@ -93,7 +89,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // Verificar si hay horarios compatibles
     function checkIfMatchPossible() {
         const timeSlots = {};
         players.forEach(player => {
