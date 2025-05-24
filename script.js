@@ -89,15 +89,39 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    function checkIfMatchPossible() {
-        const timeSlots = {};
-        players.forEach(player => {
-            player.availability.forEach(slot => {
-                const key = `${slot.day}-${slot.time}`;
-                timeSlots[key] = (timeSlots[key] || 0) + 1;
-            });
-        });
+    // (El resto del código permanece igual hasta la función checkIfMatchPossible)
 
-        return Object.values(timeSlots).some(count => count >= 12);
+function checkIfMatchPossible() {
+    const dayTimeSlots = {};
+
+    // 1. Agrupar jugadores por día y hora
+    players.forEach(player => {
+        player.availability.forEach(slot => {
+            const key = `${slot.day}-${slot.time}`; // Ej: "monday-14:00-15:00"
+            if (!dayTimeSlots[key]) {
+                dayTimeSlots[key] = [];
+            }
+            dayTimeSlots[key].push(player.name);
+        });
+    });
+
+    // 2. Verificar si algún slot tiene 12+ jugadores
+    for (const [slot, playersList] of Object.entries(dayTimeSlots)) {
+        if (playersList.length >= 12) {
+            const [day, time] = slot.split('-');
+            const dayName = {
+                monday: "Lunes",
+                tuesday: "Martes",
+                wednesday: "Miércoles",
+                thursday: "Jueves",
+                friday: "Viernes",
+                saturday: "Sábado",
+                sunday: "Domingo"
+            }[day];
+            console.log(`¡Partido confirmado! ${dayName} ${time} con: ${playersList.join(', ')}`);
+            return true;
+        }
     }
-});
+
+    return false;
+}
