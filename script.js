@@ -159,8 +159,8 @@ document.addEventListener('DOMContentLoaded', function() {
     // Renderizar cuadrícula de disponibilidad
     function renderAvailabilityGrid() {
         const venuesSorted = [...venues].sort((a, b) => globalPreferences[a] - globalPreferences[b]);
-        const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
-        const dayNames = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+        const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
+        const dayNames = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes','Sábado','Domingo'];
 
         // Renderizar pestañas de canchas
         const venueTabs = document.querySelector('.venue-tabs');
