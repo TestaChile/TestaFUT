@@ -6,6 +6,7 @@
     <title>Organizador de Partidos</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
 </head>
 <body>
     <div class="container">
@@ -22,7 +23,8 @@
             <h2>Agregar Jugador</h2>
             <input type="text" id="playerName" placeholder="Nombre" required>
             
-  <div class="compact-calendar">
+            <div class="compact-calendar">
+                <!-- Lunes -->
                 <div class="day-collapsible">
                     <button class="collapse-btn">Lunes ▼</button>
                     <div class="day-slots">
@@ -36,31 +38,65 @@
                         <label><input type="checkbox" name="monday" value="20:00-21:00"> 20:00-21:00</label>
                         <label><input type="checkbox" name="monday" value="21:00-22:00"> 21:00-22:00</label>
                         <label><input type="checkbox" name="monday" value="22:00-23:00"> 22:00-23:00</label>
-                        <!-- ... (agrega todos los slots del lunes) -->
                     </div>
                 </div>
-      <div class="compact-calendar">
+                <!-- Martes -->
                 <div class="day-collapsible">
                     <button class="collapse-btn">Martes ▼</button>
                     <div class="day-slots">
-                        <label><input type="checkbox" name="monday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="monday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="monday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="monday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="monday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="monday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="monday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="monday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="monday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="monday" value="22:00-23:00"> 22:00-23:00</label>
-                        <!-- ... (agrega todos los slots del lunes) -->
+                        <label><input type="checkbox" name="tuesday" value="09:00-10:00"> 09:00-10:00</label>
+                        <label><input type="checkbox" name="tuesday" value="10:00-11:00"> 10:00-11:00</label>
+                        <label><input type="checkbox" name="tuesday" value="11:00-12:00"> 11:00-12:00</label>
+                        <label><input type="checkbox" name="tuesday" value="13:00-14:00"> 13:00-14:00</label>
+                        <label><input type="checkbox" name="tuesday" value="14:00-15:00"> 14:00-15:00</label>
+                        <label><input type="checkbox" name="tuesday" value="15:00-16:00"> 15:00-16:00</label>
+                        <label><input type="checkbox" name="tuesday" value="16:00-17:00"> 16:00-17:00</label>
+                        <label><input type="checkbox" name="tuesday" value="17:00-18:00"> 17:00-18:00</label>
+                        <label><input type="checkbox" name="tuesday" value="18:00-19:00"> 18:00-19:00</label>
+                        <label><input type="checkbox" name="tuesday" value="19:00-20:00"> 19:00-20:00</label>
+                        <label><input type="checkbox" name="tuesday" value="20:00-21:00"> 20:00-21:00</label>
+                        <label><input type="checkbox" name="tuesday" value="21:00-22:00"> 21:00-22:00</label>
+                        <label><input type="checkbox" name="tuesday" value="22:00-23:00"> 22:00-23:00</label>
                     </div>
                 </div>
-                <!-- Repite para los otros días -->
+                <!-- Miércoles -->
+                <div class="day-collapsible">
+                    <button class="collapse-btn">Miércoles ▼</button>
+                    <div class="day-slots">
+                        <!-- Horarios similares a Martes -->
+                    </div>
+                </div>
+                <!-- Jueves -->
+                <div class="day-collapsible">
+                    <button class="collapse-btn">Jueves ▼</button>
+                    <div class="day-slots">
+                        <!-- Horarios similares a Martes -->
+                    </div>
+                </div>
+                <!-- Viernes -->
+                <div class="day-collapsible">
+                    <button class="collapse-btn">Viernes ▼</button>
+                    <div class="day-slots">
+                        <!-- Horarios similares a Martes -->
+                    </div>
+                </div>
             </div>
             
             <button id="addPlayer">Agregar</button>
             <button id="resetData">Reiniciar</button>
+        </div>
+
+        <!-- Preferencias de Cancha -->
+        <div class="preferences-section">
+            <h2>🏟️ Preferencias de Cancha</h2>
+            <div id="venuesRanking">
+                <p>Ordena tus preferencias (1 = más preferido):</p>
+                <div class="venue-item" draggable="true" data-venue="Club Recrear">1. Club Recrear</div>
+                <div class="venue-item" draggable="true" data-venue="Dominica Sports">2. Dominica Sports</div>
+                <div class="venue-item" draggable="true" data-venue="TerraSoccer">3. TerraSoccer</div>
+                <div class="venue-item" draggable="true" data-venue="Massocer">4. Massocer</div>
+                <div class="venue-item" draggable="true" data-venue="Santa Julia">5. Santa Julia</div>
+            </div>
         </div>
 
         <!-- Lista de jugadores -->
@@ -68,8 +104,17 @@
             <h2>👥 Jugadores Registrados: <span id="totalPlayers">0</span></h2>
             <div id="playersList"></div>
         </div>
+
+        <!-- Disponibilidad por Cancha -->
+        <div class="availability-grid">
+            <h2>📊 Disponibilidad por Cancha</h2>
+            <div class="venue-tabs"></div>
+            <div class="day-tabs"></div>
+            <div class="time-slots-grid"></div>
+        </div>
     </div>
 
     <script src="script.js"></script>
 </body>
 </html>
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
