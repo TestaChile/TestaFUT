@@ -2,16 +2,38 @@ document.addEventListener('DOMContentLoaded', function() {
     const players = JSON.parse(localStorage.getItem('players')) || [];
     const lastResetDay = localStorage.getItem('lastResetDay');
     const today = new Date().getDay();
+    const venues = ["Club Recrear", "Dominica Sports", "TerraSoccer", "Massocer", "Santa Julia"];
+    let globalPreferences = {};
+    let currentVenue = null;
+    let currentDay = null;
 
+    // Reiniciar datos los domingos
     if (today === 0 && lastResetDay !== '0') {
         localStorage.setItem('players', JSON.stringify([]));
         localStorage.setItem('lastResetDay', '0');
         window.location.reload();
+    } else {
+        localStorage.setItem('lastResetDay', today.toString());
     }
 
+    // Inicializar SortableJS para las preferencias
+    new Sortable(document.getElementById('venuesRanking'), {
+        animation: 150,
+        ghostClass: 'sortable-ghost',
+        onEnd: function() {
+            document.querySelectorAll('#venuesRanking .venue-item').forEach((item, index) => {
+                item.textContent = `${index + 1}. ${item.dataset.venue}`;
+            });
+        }
+    });
+
+    // Inicializar interfaz
     updatePlayersList();
     updateCounter();
+    updateGlobalPreferences();
+    renderAvailabilityGrid();
 
+    // Eventos para los botones de colapso
     document.querySelectorAll('.collapse-btn').forEach(btn => {
         btn.addEventListener('click', function() {
             const slots = this.nextElementSibling;
@@ -22,6 +44,7 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
+    // Agregar jugador
     document.getElementById('addPlayer').addEventListener('click', function() {
         const name = document.getElementById('playerName').value.trim();
         if (!name) {
@@ -42,14 +65,26 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        players.push({ name, availability });
-        localStorage.setItem('players', JSON.stringify(players));
+        const preferences = {};
+        document.querySelectorAll('#venuesRanking .venue-item').forEach((item, index) => {
+            preferences[item.dataset.venue] = index + 1;
+        });
+
+        players.push({ 
+            name, 
+            availability,
+            preferences
+        });
         
+        localStorage.setItem('players', JSON.stringify(players));
         updatePlayersList();
         updateCounter();
+        updateGlobalPreferences();
+        renderAvailabilityGrid();
         document.getElementById('playerName').value = '';
     });
 
+    // Reiniciar datos
     document.getElementById('resetData').addEventListener('click', function() {
         if (confirm('¿Borrar todos los jugadores?')) {
             localStorage.setItem('players', JSON.stringify([]));
@@ -57,6 +92,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
+    // Actualizar lista de jugadores
     function updatePlayersList() {
         const list = document.getElementById('playersList');
         list.innerHTML = '';
@@ -71,6 +107,7 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('totalPlayers').textContent = players.length;
     }
 
+    // Actualizar contador
     function updateCounter() {
         const remaining = 12 - players.length;
         const countText = document.getElementById('countText');
@@ -89,39 +126,118 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     }
 
-    // (El resto del código permanece igual hasta la función checkIfMatchPossible)
+    // Verificar partidos posibles
+    function checkIfMatchPossible() {
+        const dayTimeSlots = {};
 
-function checkIfMatchPossible() {
-    const dayTimeSlots = {};
-
-    // 1. Agrupar jugadores por día y hora
-    players.forEach(player => {
-        player.availability.forEach(slot => {
-            const key = `${slot.day}-${slot.time}`; // Ej: "monday-14:00-15:00"
-            if (!dayTimeSlots[key]) {
-                dayTimeSlots[key] = [];
-            }
-            dayTimeSlots[key].push(player.name);
+        players.forEach(player => {
+            player.availability.forEach(slot => {
+                const key = `${slot.day}-${slot.time}`;
+                if (!dayTimeSlots[key]) {
+                    dayTimeSlots[key] = [];
+                }
+                dayTimeSlots[key].push(player.name);
+            });
         });
-    });
 
-    // 2. Verificar si algún slot tiene 12+ jugadores
-    for (const [slot, playersList] of Object.entries(dayTimeSlots)) {
-        if (playersList.length >= 12) {
-            const [day, time] = slot.split('-');
-            const dayName = {
-                monday: "Lunes",
-                tuesday: "Martes",
-                wednesday: "Miércoles",
-                thursday: "Jueves",
-                friday: "Viernes",
-                saturday: "Sábado",
-                sunday: "Domingo"
-            }[day];
-            console.log(`¡Partido confirmado! ${dayName} ${time} con: ${playersList.join(', ')}`);
-            return true;
+        return Object.values(dayTimeSlots).some(slot => slot.length >= 12);
+    }
+
+    // Actualizar preferencias globales
+    function updateGlobalPreferences() {
+        venues.forEach(venue => {
+            const venuePreferences = players
+                .filter(player => player.preferences)
+                .map(player => player.preferences[venue] || 5);
+            
+            globalPreferences[venue] = venuePreferences.length > 0 
+                ? venuePreferences.reduce((sum, pref) => sum + pref, 0) / venuePreferences.length
+                : 3;
+        });
+    }
+
+    // Renderizar cuadrícula de disponibilidad
+    function renderAvailabilityGrid() {
+        const venuesSorted = [...venues].sort((a, b) => globalPreferences[a] - globalPreferences[b]);
+        const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday'];
+        const dayNames = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes'];
+
+        // Renderizar pestañas de canchas
+        const venueTabs = document.querySelector('.venue-tabs');
+        venueTabs.innerHTML = venuesSorted.map(venue => `
+            <button class="venue-tab ${currentVenue === venue ? 'active' : ''}" 
+                    data-venue="${venue}">
+                ${venue}
+            </button>
+        `).join('');
+
+        // Renderizar pestañas de días
+        const dayTabs = document.querySelector('.day-tabs');
+        dayTabs.innerHTML = dayNames.map((dayName, i) => `
+            <button class="day-tab ${currentDay === days[i] ? 'active' : ''}" 
+                    data-day="${days[i]}">
+                ${dayName}
+            </button>
+        `).join('');
+
+        // Eventos para pestañas
+        document.querySelectorAll('.venue-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                currentVenue = this.dataset.venue;
+                renderAvailabilityGrid();
+            });
+        });
+
+        document.querySelectorAll('.day-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                currentDay = this.dataset.day;
+                renderAvailabilityGrid();
+            });
+        });
+
+        // Seleccionar primera pestaña por defecto
+        if (!currentVenue) currentVenue = venuesSorted[0];
+        if (!currentDay) currentDay = days[0];
+
+        // Renderizar slots de tiempo
+        const timeSlotsGrid = document.querySelector('.time-slots-grid');
+        if (currentVenue && currentDay) {
+            const timeSlots = getTimeSlotsForDay(currentDay);
+            timeSlotsGrid.innerHTML = timeSlots.map(slot => {
+                const availablePlayers = players.filter(player => 
+                    player.availability.some(av => 
+                        av.day === currentDay && av.time === slot
+                    )
+                ).map(player => player.name);
+
+                return `
+                    <div class="time-slot-card">
+                        <span>${slot}</span>
+                        <div class="time-slot-players">
+                            ${availablePlayers.map(name => `
+                                <div class="player-icon" title="${name}">
+                                    ${name.charAt(0)}
+                                </div>
+                            `).join('')}
+                        </div>
+                    </div>
+                `;
+            }).join('');
         }
     }
 
-    return false;
-}
+    // Obtener slots de tiempo para un día
+    function getTimeSlotsForDay(day) {
+        const slotsMap = {
+            monday: ['13:00-14:00', '14:00-15:00', '15:00-16:00', '16:00-17:00', 
+                    '17:00-18:00', '18:00-19:00', '19:00-20:00', '20:00-21:00', 
+                    '21:00-22:00', '22:00-23:00'],
+            tuesday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
+                     '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
+                     '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
+                     '22:00-23:00'],
+            // Agregar otros días según corresponda
+        };
+        return slotsMap[day] || [];
+    }
+});
