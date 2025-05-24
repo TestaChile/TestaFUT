@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    max-width: 600px;
+    max-width: 1000px;
     margin: 0 auto;
     background: white;
     padding: 20px;
@@ -27,6 +27,13 @@ body {
     display: block;
     font-weight: bold;
     margin-top: 5px;
+}
+
+.form-section, .preferences-section, .players-section, .availability-grid {
+    margin-bottom: 25px;
+    padding: 20px;
+    border: 1px solid #e0e0e0;
+    border-radius: 8px;
 }
 
 .compact-calendar {
@@ -121,4 +128,67 @@ button {
 
 .collapse-btn:hover {
     background: #2980b9;
+}
+
+/* Nuevos estilos para preferencias */
+.venue-item {
+    padding: 10px;
+    margin: 5px 0;
+    background: #e9ecef;
+    cursor: move;
+    border-radius: 4px;
+    user-select: none;
+}
+
+.venue-item:hover {
+    background: #dee2e6;
+}
+
+/* Estilos para la cuadrícula de disponibilidad */
+.venue-tabs, .day-tabs {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+    flex-wrap: wrap;
+}
+
+.venue-tab, .day-tab {
+    padding: 8px 12px;
+    background: #dee2e6;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.venue-tab.active, .day-tab.active {
+    background: #3498db;
+    color: white;
+}
+
+.time-slot-card {
+    padding: 10px;
+    margin: 5px;
+    background: #f1f8ff;
+    border-radius: 4px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.time-slot-players {
+    display: flex;
+    gap: 5px;
+}
+
+.player-icon {
+    width: 24px;
+    height: 24px;
+    background: #3498db;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
 }
