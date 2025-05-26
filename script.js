@@ -1,3 +1,14 @@
+// Primero el listener del Modo Dios (fuera de DOMContentLoaded para mejor organización)
+document.getElementById('godModeBtn')?.addEventListener('click', function() {
+    if (document.getElementById('adminCode').value === '2565') {
+        document.getElementById('adminPanel').style.display = 'block';
+        document.getElementById('resetData').style.display = 'inline-block';
+        alert('Modo Dios Activado');
+    } else {
+        alert('Código incorrecto');
+    }
+});
+
 document.addEventListener('DOMContentLoaded', function() {
     const players = JSON.parse(localStorage.getItem('players')) || [];
     const lastResetDay = localStorage.getItem('lastResetDay');
@@ -47,8 +58,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Agregar jugador
     document.getElementById('addPlayer').addEventListener('click', function() {
         const name = document.getElementById('playerName').value.trim();
+        const position = document.getElementById('playerPosition').value;
+        
         if (!name) {
             alert('Ingresa tu nombre');
+            return;
+        }
+        
+        if (!position) {
+            alert('Selecciona tu posición');
             return;
         }
 
@@ -72,6 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
         players.push({ 
             name, 
+            position,
             availability,
             preferences
         });
@@ -85,7 +104,7 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 
     // Reiniciar datos
-    document.getElementById('resetData').addEventListener('click', function() {
+    document.getElementById('resetData')?.addEventListener('click', function() {
         if (confirm('¿Borrar todos los jugadores?')) {
             localStorage.setItem('players', JSON.stringify([]));
             window.location.reload();
@@ -100,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function() {
         players.forEach((player, index) => {
             const span = document.createElement('span');
             span.className = `player-name ${index % 2 === 0 ? 'bold' : 'normal'}`;
-            span.textContent = player.name;
+            span.textContent = `${player.name} (${player.position})`;
             list.appendChild(span);
         });
         
@@ -208,17 +227,22 @@ document.addEventListener('DOMContentLoaded', function() {
                     player.availability.some(av => 
                         av.day === currentDay && av.time === slot
                     )
-                ).map(player => player.name);
+                );
 
                 return `
                     <div class="time-slot-card">
                         <span>${slot}</span>
                         <div class="time-slot-players">
-                            ${availablePlayers.map(name => `
-                                <div class="player-icon" title="${name}">
-                                    ${name.charAt(0)}
-                                </div>
-                            `).join('')}
+                            ${availablePlayers.map(player => {
+                                const pref = player.preferences[currentVenue];
+                                return `
+                                    <div class="player-icon" 
+                                         title="${player.name} (Pref: ${pref})"
+                                         data-pref="${pref}">
+                                        ${player.name.charAt(0)}
+                                    </div>
+                                `;
+                            }).join('')}
                         </div>
                     </div>
                 `;
@@ -237,26 +261,25 @@ document.addEventListener('DOMContentLoaded', function() {
                      '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
                      '22:00-23:00'],
             wednesday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
-                     '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
-                     '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
-                     '22:00-23:00'],
+                       '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
+                       '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
+                       '22:00-23:00'],
             thursday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
-                     '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
-                     '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
-                     '22:00-23:00'],
+                      '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
+                      '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
+                      '22:00-23:00'],
             friday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
-                     '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
-                     '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
-                     '22:00-23:00'],
+                   '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
+                   '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
+                   '22:00-23:00'],
             saturday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
-                     '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
-                     '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
-                     '22:00-23:00'],
+                      '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
+                      '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
+                      '22:00-23:00'],
             sunday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
-                     '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
-                     '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
-                     '22:00-23:00'],
-            // Agregar otros días según corresponda
+                   '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
+                   '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
+                   '22:00-23:00']
         };
         return slotsMap[day] || [];
     }
