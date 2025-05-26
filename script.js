@@ -3,16 +3,11 @@ document.getElementById('godModeBtn')?.addEventListener('click', function() {
     if (document.getElementById('adminCode').value === '2565') {
         const adminPanel = document.getElementById('adminPanel');
         adminPanel.style.display = adminPanel.style.display === 'block' ? 'none' : 'block';
-        renderAvailabilityGrid(); // Actualizar la vista
+        renderAvailabilityGrid();
         alert(adminPanel.style.display === 'block' ? 'Modo Dios ACTIVADO' : 'Modo Dios DESACTIVADO');
     } else {
         alert('Código incorrecto');
     }
-});
-
-// Función para mostrar/ocultar números de preferencia
-document.getElementById('togglePrefNumbers')?.addEventListener('click', function() {
-    renderAvailabilityGrid(); // Vuelve a renderizar la cuadrícula
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -26,58 +21,91 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Reiniciar datos los domingos
     if (today === 0 && lastResetDay !== '0') {
-        localStorage.setItem('players', JSON.stringify([]));
-        localStorage.setItem('lastResetDay', '0');
-        window.location.reload();
+        resetAllData();
     } else {
         localStorage.setItem('lastResetDay', today.toString());
     }
 
-    // Renderizar preferencias de cancha con botones de activación
+    // Renderizar preferencias de cancha
     renderVenuePreferences();
 
-    // Inicializar SortableJS para las preferencias
+    // Inicializar SortableJS
     new Sortable(document.getElementById('venuesRanking'), {
         animation: 150,
         ghostClass: 'sortable-ghost',
         handle: '.venue-item',
-        onEnd: function() {
-            updateVenuePreferences();
-        }
+        onEnd: updateVenuePreferences
     });
 
     // Inicializar interfaz
-    updatePlayersList();
-    updateCounter();
-    updateGlobalPreferences();
-    renderAvailabilityGrid();
+    updateInterface();
 
-    // Eventos para los botones de colapso
-    document.querySelectorAll('.collapse-btn').forEach(btn => {
-        btn.addEventListener('click', function() {
-            const slots = this.nextElementSibling;
-            slots.style.display = slots.style.display === 'block' ? 'none' : 'block';
-            this.innerHTML = this.innerHTML.includes('▼') 
-                ? this.innerHTML.replace('▼', '▲') 
-                : this.innerHTML.replace('▲', '▼');
+    // Event listeners
+    setupEventListeners();
+
+    // Función para reiniciar todos los datos
+    function resetAllData() {
+        localStorage.setItem('players', JSON.stringify([]));
+        localStorage.setItem('lastResetDay', '0');
+        window.location.reload();
+    }
+
+    // Función para actualizar la interfaz
+    function updateInterface() {
+        updatePlayersList();
+        updateCounter();
+        updateGlobalPreferences();
+        renderAvailabilityGrid();
+    }
+
+    // Configurar event listeners
+    function setupEventListeners() {
+        // Botones de colapso
+        document.querySelectorAll('.collapse-btn').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const slots = this.nextElementSibling;
+                slots.style.display = slots.style.display === 'block' ? 'none' : 'block';
+                this.innerHTML = this.innerHTML.includes('▼') 
+                    ? this.innerHTML.replace('▼', '▲') 
+                    : this.innerHTML.replace('▲', '▼');
+            });
         });
-    });
 
-    // Agregar jugador
-    document.getElementById('addPlayer').addEventListener('click', function() {
+        // Agregar jugador
+        document.getElementById('addPlayer').addEventListener('click', addPlayer);
+
+        // Reiniciar datos (admin)
+        document.getElementById('forceReset')?.addEventListener('click', function() {
+            if (confirm('¿Borrar TODOS los jugadores?')) {
+                resetAllData();
+            }
+        });
+
+        // Toggle números de preferencia
+        document.getElementById('togglePrefNumbers')?.addEventListener('click', function() {
+            renderAvailabilityGrid();
+        });
+    }
+
+    // Añadir nuevo jugador
+    function addPlayer() {
         const name = document.getElementById('playerName').value.trim();
         const position = document.getElementById('playerPosition').value;
         
-        if (!name) {
-            alert('Ingresa tu nombre');
-            return;
-        }
-        
-        if (!position) {
-            alert('Selecciona tu posición');
-            return;
-        }
+        if (!name) return alert('Ingresa tu nombre');
+        if (!position) return alert('Selecciona tu posición');
 
+        const availability = getSelectedTimeSlots();
+        if (availability.length === 0) return alert('Selecciona al menos un horario');
+
+        const { preferences, activeVenues } = getVenuePreferences();
+
+        players.push({ name, position, availability, preferences, activeVenues });
+        saveAndUpdate();
+    }
+
+    // Obtener horarios seleccionados
+    function getSelectedTimeSlots() {
         const availability = [];
         document.querySelectorAll('.day-slots input[type="checkbox"]:checked').forEach(checkbox => {
             availability.push({
@@ -85,42 +113,28 @@ document.addEventListener('DOMContentLoaded', function() {
                 time: checkbox.value
             });
         });
+        return availability;
+    }
 
-        if (availability.length === 0) {
-            alert('Selecciona al menos un horario');
-            return;
-        }
-
+    // Obtener preferencias de cancha
+    function getVenuePreferences() {
         const preferences = {};
         const activeVenues = [];
+        
         document.querySelectorAll('#venuesRanking .venue-item:not(.disabled)').forEach((item, index) => {
             preferences[item.dataset.venue] = index + 1;
             activeVenues.push(item.dataset.venue);
         });
 
-        players.push({ 
-            name, 
-            position,
-            availability,
-            preferences,
-            activeVenues
-        });
-        
-        localStorage.setItem('players', JSON.stringify(players));
-        updatePlayersList();
-        updateCounter();
-        updateGlobalPreferences();
-        renderAvailabilityGrid();
-        document.getElementById('playerName').value = '';
-    });
+        return { preferences, activeVenues };
+    }
 
-    // Reiniciar datos
-    document.getElementById('resetData')?.addEventListener('click', function() {
-        if (confirm('¿Borrar todos los jugadores?')) {
-            localStorage.setItem('players', JSON.stringify([]));
-            window.location.reload();
-        }
-    });
+    // Guardar y actualizar
+    function saveAndUpdate() {
+        localStorage.setItem('players', JSON.stringify(players));
+        document.getElementById('playerName').value = '';
+        updateInterface();
+    }
 
     // Actualizar lista de jugadores
     function updatePlayersList() {
@@ -163,9 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
         players.forEach(player => {
             player.availability.forEach(slot => {
                 const key = `${slot.day}-${slot.time}`;
-                if (!dayTimeSlots[key]) {
-                    dayTimeSlots[key] = [];
-                }
+                dayTimeSlots[key] = dayTimeSlots[key] || [];
                 dayTimeSlots[key].push(player.name);
             });
         });
@@ -217,11 +229,13 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Actualizar preferencias al cambiar orden o estado
+    // Actualizar preferencias de cancha
     function updateVenuePreferences() {
         document.querySelectorAll('#venuesRanking .venue-item:not(.disabled)').forEach((item, index) => {
             item.textContent = `${index + 1}. ${item.dataset.venue}`;
         });
+        updateGlobalPreferences();
+        renderAvailabilityGrid();
     }
 
     // Renderizar cuadrícula de disponibilidad
@@ -231,74 +245,76 @@ document.addEventListener('DOMContentLoaded', function() {
         const dayNames = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes','Sábado','Domingo'];
         const isAdminMode = document.getElementById('adminPanel').style.display === 'block';
 
-        // Renderizar pestañas de canchas
-        const venueTabs = document.querySelector('.venue-tabs');
-        venueTabs.innerHTML = venuesSorted.map(venue => `
-            <button class="venue-tab ${currentVenue === venue ? 'active' : ''}" 
-                    data-venue="${venue}">
-                ${venue}
-            </button>
-        `).join('');
-
-        // Renderizar pestañas de días
-        const dayTabs = document.querySelector('.day-tabs');
-        dayTabs.innerHTML = dayNames.map((dayName, i) => `
-            <button class="day-tab ${currentDay === days[i] ? 'active' : ''}" 
-                    data-day="${days[i]}">
-                ${dayName}
-            </button>
-        `).join('');
-
-        // Eventos para pestañas
-        document.querySelectorAll('.venue-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                currentVenue = this.dataset.venue;
-                renderAvailabilityGrid();
-            });
-        });
-
-        document.querySelectorAll('.day-tab').forEach(tab => {
-            tab.addEventListener('click', function() {
-                currentDay = this.dataset.day;
-                renderAvailabilityGrid();
-            });
-        });
+        // Renderizar pestañas
+        renderTabs('.venue-tabs', venuesSorted, currentVenue, 'venue');
+        renderTabs('.day-tabs', dayNames, currentDay, 'day', days);
 
         // Seleccionar primera pestaña por defecto
-        if (!currentVenue) currentVenue = venuesSorted[0];
-        if (!currentDay) currentDay = days[0];
+        currentVenue = currentVenue || venuesSorted[0];
+        currentDay = currentDay || days[0];
 
         // Renderizar slots de tiempo
-        const timeSlotsGrid = document.querySelector('.time-slots-grid');
-        if (currentVenue && currentDay) {
-            const timeSlots = getTimeSlotsForDay(currentDay);
-            timeSlotsGrid.innerHTML = timeSlots.map(slot => {
-                const availablePlayers = players.filter(player => 
-                    player.availability.some(av => 
-                        av.day === currentDay && av.time === slot
-                    ) && 
-                    player.activeVenues.includes(currentVenue)
-                );
+        renderTimeSlots();
+    }
 
-                return `
-                    <div class="time-slot-card">
-                        <span>${slot}</span>
-                        <div class="time-slot-players">
-                            ${availablePlayers.map(player => {
-                                const pref = player.preferences[currentVenue];
-                                return `
-                                    <div class="player-icon ${player.position}" 
-                                         title="${player.name} (${player.position})${isAdminMode ? ' - Pref: ' + pref : ''}"
-                                         ${isAdminMode ? 'data-pref="' + pref + '"' : ''}>
-                                        ${player.name.charAt(0)}
-                                    </div>
-                                `;
-                            }).join('')}
-                        </div>
+    // Renderizar pestañas
+    function renderTabs(selector, items, current, type, itemsData = null) {
+        const tabs = document.querySelector(selector);
+        tabs.innerHTML = items.map((item, i) => {
+            const value = itemsData ? itemsData[i] : item;
+            return `
+                <button class="${type}-tab ${current === value ? 'active' : ''}" 
+                        data-${type}="${value}">
+                    ${item}
+                </button>
+            `;
+        }).join('');
+
+        // Event listeners para pestañas
+        document.querySelectorAll(`${selector} button`).forEach(tab => {
+            tab.addEventListener('click', function() {
+                if (type === 'venue') currentVenue = this.dataset.venue;
+                if (type === 'day') currentDay = this.dataset.day;
+                renderAvailabilityGrid();
+            });
+        });
+    }
+
+    // Renderizar slots de tiempo
+    function renderTimeSlots() {
+        const timeSlotsGrid = document.querySelector('.time-slots-grid');
+        if (!currentVenue || !currentDay) return;
+
+        const timeSlots = getTimeSlotsForDay(currentDay);
+        const isAdminMode = document.getElementById('adminPanel').style.display === 'block';
+
+        timeSlotsGrid.innerHTML = timeSlots.map(slot => {
+            const availablePlayers = players.filter(player => 
+                player.availability.some(av => av.day === currentDay && av.time === slot) && 
+                player.activeVenues.includes(currentVenue)
+            );
+
+            return `
+                <div class="time-slot-card">
+                    <span>${slot}</span>
+                    <div class="time-slot-players">
+                        ${availablePlayers.map(player => renderPlayerIcon(player, isAdminMode)).join('')}
                     </div>
-                `;
-            }).join('');
-        }
+                </div>
+            `;
+        }).join('');
+    }
+
+    // Renderizar ícono de jugador
+    function renderPlayerIcon(player, showPref) {
+        const pref = player.preferences[currentVenue];
+        return `
+            <div class="player-icon ${player.position}" 
+                 title="${player.name} (${player.position})${showPref ? ' - Pref: ' + pref : ''}"
+                 ${showPref ? 'data-pref="' + pref + '"' : ''}>
+                ${player.name.charAt(0)}
+            </div>
+        `;
     }
 
     // Obtener slots de tiempo para un día
@@ -316,21 +332,21 @@ document.addEventListener('DOMContentLoaded', function() {
                       '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
                       '22:00-23:00'],
             thursday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
-                     '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
-                     '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
-                     '22:00-23:00'],
+                      '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
+                      '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
+                      '22:00-23:00'],
             friday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
-                   '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
-                   '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
-                   '22:00-23:00'],
+                    '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
+                    '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
+                    '22:00-23:00'],
             saturday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
-                     '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
-                     '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
-                     '22:00-23:00'],
+                      '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
+                      '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
+                      '22:00-23:00'],
             sunday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
-                   '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
-                   '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
-                   '22:00-23:00']
+                    '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
+                    '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
+                    '22:00-23:00']
         };
         return slotsMap[day] || [];
     }
