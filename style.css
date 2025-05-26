@@ -3,6 +3,7 @@ body {
     margin: 0;
     padding: 20px;
     background-color: #f4f4f9;
+    position: relative;
 }
 
 .container {
@@ -14,6 +15,45 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+/* Panel de Administrador */
+#adminAccess {
+    position: absolute;
+    top: 15px;
+    right: 15px;
+}
+
+#adminAccess input {
+    padding: 5px;
+    width: 120px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+#adminPanel {
+    position: absolute;
+    top: 50px;
+    right: 15px;
+    background: white;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    z-index: 100;
+}
+
+#adminPanel.hidden {
+    display: none;
+}
+
+#adminPanel button {
+    display: block;
+    width: 100%;
+    margin: 5px 0;
+    padding: 8px;
+    font-size: 14px;
+}
+
+/* Contador */
 .counter {
     background: #2c3e50;
     color: white;
@@ -29,17 +69,46 @@ body {
     margin-top: 5px;
 }
 
-.form-section, .preferences-section, .players-section, .availability-grid {
+/* Formulario */
+.form-section {
     margin-bottom: 25px;
     padding: 20px;
     border: 1px solid #e0e0e0;
     border-radius: 8px;
 }
 
-.compact-calendar {
-    margin: 10px 0;
+.player-info {
+    margin-bottom: 20px;
 }
 
+#playerName, #playerPosition {
+    display: block;
+    width: 100%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+/* Preferencias de cancha */
+.preferences-section {
+    margin: 20px 0;
+}
+
+.venue-item {
+    padding: 10px;
+    margin: 5px 0;
+    background: #e9ecef;
+    cursor: move;
+    border-radius: 4px;
+    user-select: none;
+}
+
+.venue-item:hover {
+    background: #dee2e6;
+}
+
+/* Disponibilidad */
 .day-collapsible {
     margin-bottom: 0;
 }
@@ -70,6 +139,7 @@ body {
     font-size: 14px;
 }
 
+/* Lista de jugadores */
 #playersList {
     display: flex;
     flex-wrap: wrap;
@@ -100,95 +170,14 @@ body {
     color: #7f8c8d;
 }
 
+/* Botones */
+.form-buttons {
+    display: flex;
+    gap: 10px;
+    margin-top: 20px;
+}
+
 button {
-    margin-top: 10px;
     padding: 8px 15px;
     border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-#addPlayer {
-    background: #2ecc71;
-    color: white;
-}
-
-#resetData {
-    background: #e74c3c;
-    color: white;
-}
-
-#addPlayer:hover {
-    background: #27ae60;
-}
-
-#resetData:hover {
-    background: #c0392b;
-}
-
-.collapse-btn:hover {
-    background: #2980b9;
-}
-
-/* Nuevos estilos para preferencias */
-.venue-item {
-    padding: 10px;
-    margin: 5px 0;
-    background: #e9ecef;
-    cursor: move;
-    border-radius: 4px;
-    user-select: none;
-}
-
-.venue-item:hover {
-    background: #dee2e6;
-}
-
-/* Estilos para la cuadrícula de disponibilidad */
-.venue-tabs, .day-tabs {
-    display: flex;
-    gap: 5px;
-    margin-bottom: 15px;
-    flex-wrap: wrap;
-}
-
-.venue-tab, .day-tab {
-    padding: 8px 12px;
-    background: #dee2e6;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-
-.venue-tab.active, .day-tab.active {
-    background: #3498db;
-    color: white;
-}
-
-.time-slot-card {
-    padding: 10px;
-    margin: 5px;
-    background: #f1f8ff;
-    border-radius: 4px;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.time-slot-players {
-    display: flex;
-    gap: 5px;
-}
-
-.player-icon {
-    width: 24px;
-    height: 24px;
-    background: #3498db;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
-}
+    border-radius
