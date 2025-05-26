@@ -230,3 +230,31 @@ button {
     font-size: 8px;
     color: #2c3e50;
 }
+/* Colores por posición */
+.player-icon.arquero { background-color: #3498db; }
+.player-icon.defensa { background-color: #2ecc71; }
+.player-icon.mediocampista { background-color: #f1c40f; }
+.player-icon.delantero { background-color: #e74c3c; }
+
+/* Estilo para venue-item desactivado */
+.venue-item.disabled {
+    opacity: 0.5;
+    text-decoration: line-through;
+    background-color: #f8d7da;
+}
+
+/* Botón para desactivar canchas */
+.toggle-venue-btn {
+    margin: 5px;
+    padding: 3px 8px;
+    font-size: 12px;
+    background: #6c757d;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    cursor: pointer;
+}
+
+.toggle-venue-btn:hover {
+    background: #5a6268;
+}
