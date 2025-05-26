@@ -10,207 +10,6 @@
 </head>
 <body>
     <div class="container">
-        <h1>⚽ Organizador de Partidos</h1>
-        
-        <!-- Contador de jugadores -->
-        <div class="counter">
-            <span id="countText">¡Faltan 12 jugadores!</span>
-            <span id="matchStatus"></span>
-        </div>
-
-        <!-- Formulario compacto -->
-        <div class="form-section">
-            <h2>Agregar Jugador</h2>
-            <input type="text" id="playerName" placeholder="Nombre" required>
-            
-            <div class="compact-calendar">
-                <!-- Lunes -->
-                <div class="day-collapsible">
-                    <button class="collapse-btn">Lunes ▼</button>
-                    <div class="day-slots">
-                        <label><input type="checkbox" name="monday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="monday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="monday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="monday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="monday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="monday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="monday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="monday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="monday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="monday" value="22:00-23:00"> 22:00-23:00</label>
-                    </div>
-                </div>
-                <!-- Martes -->
-                <div class="day-collapsible">
-                    <button class="collapse-btn">Martes ▼</button>
-                    <div class="day-slots">
-                        <label><input type="checkbox" name="tuesday" value="09:00-10:00"> 09:00-10:00</label>
-                        <label><input type="checkbox" name="tuesday" value="10:00-11:00"> 10:00-11:00</label>
-                        <label><input type="checkbox" name="tuesday" value="11:00-12:00"> 11:00-12:00</label>
-                        <label><input type="checkbox" name="tuesday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="tuesday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="tuesday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="tuesday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="tuesday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="tuesday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="tuesday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="tuesday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="tuesday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="tuesday" value="22:00-23:00"> 22:00-23:00</label>
-                    </div>
-                </div>
-                <!-- Miércoles -->
-                <div class="day-collapsible">
-                    <button class="collapse-btn">Miércoles ▼</button>
-                    <div class="day-slots">
-                        <label><input type="checkbox" name="wednesday" value="09:00-10:00"> 09:00-10:00</label>
-                        <label><input type="checkbox" name="wednesday" value="10:00-11:00"> 10:00-11:00</label>
-                        <label><input type="checkbox" name="wednesday" value="11:00-12:00"> 11:00-12:00</label>
-                        <label><input type="checkbox" name="wednesday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="wednesday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="wednesday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="wednesday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="wednesday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="wednesday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="wednesday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="wednesday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="wednesday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="wednesday" value="22:00-23:00"> 22:00-23:00</label>
-                    </div>
-                </div>
-                <!-- Jueves -->
-                <div class="day-collapsible">
-                    <button class="collapse-btn">Jueves ▼</button>
-                    <div class="day-slots">
-                        <label><input type="checkbox" name="thursday" value="09:00-10:00"> 09:00-10:00</label>
-                        <label><input type="checkbox" name="thursday" value="10:00-11:00"> 10:00-11:00</label>
-                        <label><input type="checkbox" name="thursday" value="11:00-12:00"> 11:00-12:00</label>
-                        <label><input type="checkbox" name="thursday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="thursday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="thursday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="thursday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="thursday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="thursday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="thursday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="thursday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="thursday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="thursday" value="22:00-23:00"> 22:00-23:00</label>
-                    </div>
-                </div>
-                <!-- Viernes -->
-                <div class="day-collapsible">
-                    <button class="collapse-btn">Viernes ▼</button>
-                    <div class="day-slots">
-                        <label><input type="checkbox" name="friday" value="09:00-10:00"> 09:00-10:00</label>
-                        <label><input type="checkbox" name="friday" value="10:00-11:00"> 10:00-11:00</label>
-                        <label><input type="checkbox" name="friday" value="11:00-12:00"> 11:00-12:00</label>
-                        <label><input type="checkbox" name="friday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="friday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="friday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="friday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="friday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="friday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="friday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="friday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="friday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="friday" value="22:00-23:00"> 22:00-23:00</label>
-                    </div>
-                </div>
-                <!-- Sabado -->
-                <div class="day-collapsible">
-                    <button class="collapse-btn">Sábado ▼</button>
-                    <div class="day-slots">
-                        <label><input type="checkbox" name="saturday" value="09:00-10:00"> 09:00-10:00</label>
-                        <label><input type="checkbox" name="saturday" value="10:00-11:00"> 10:00-11:00</label>
-                        <label><input type="checkbox" name="saturday" value="11:00-12:00"> 11:00-12:00</label>
-                        <label><input type="checkbox" name="saturday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="saturday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="saturday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="saturday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="saturday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="saturday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="saturday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="saturday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="saturday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="saturday" value="22:00-23:00"> 22:00-23:00</label>
-                    </div>
-                </div>
-                <!-- Domingo -->
-                <div class="day-collapsible">
-                    <button class="collapse-btn">Domingo▼</button>
-                    <div class="day-slots">
-                        <label><input type="checkbox" name="sunday" value="09:00-10:00"> 09:00-10:00</label>
-                        <label><input type="checkbox" name="sunday" value="10:00-11:00"> 10:00-11:00</label>
-                        <label><input type="checkbox" name="sunday" value="11:00-12:00"> 11:00-12:00</label>
-                        <label><input type="checkbox" name="sunday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="sunday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="sunday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="sunday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="sunday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="sunday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="sunday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="sunday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="sunday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="sunday" value="22:00-23:00"> 22:00-23:00</label>
-                    </div>
-                </div>
-            </div>
-    
-            <button id="addPlayer">Agregar</button>
-            <button id="resetData">Reiniciar</button>
-        </div>
-
-        <!-- Preferencias de Cancha -->
-        <div class="preferences-section">
-            <h2>🏟️ Preferencias de Cancha</h2>
-            <div id="venuesRanking">
-                <p>Ordena tus preferencias (1 = más preferido):</p>
-                <div class="venue-item" draggable="true" data-venue="Club Recrear">1. Club Recrear</div>
-                <div class="venue-item" draggable="true" data-venue="Dominica Sports">2. Dominica Sports</div>
-                <div class="venue-item" draggable="true" data-venue="TerraSoccer">3. TerraSoccer</div>
-                <div class="venue-item" draggable="true" data-venue="Massocer">4. Massocer</div>
-                <div class="venue-item" draggable="true" data-venue="Santa Julia">5. Santa Julia</div>
-            </div>
-        </div>
-
-        <!-- Lista de jugadores -->
-        <div class="players-section">
-            <h2>👥 Jugadores Registrados: <span id="totalPlayers">0</span></h2>
-            <div id="playersList"></div>
-        </div>
-
-        <!-- Disponibilidad por Cancha -->
-        <div class="availability-grid">
-            <h2>📊 Disponibilidad por Cancha</h2>
-            <div class="venue-tabs"></div>
-            <div class="day-tabs"></div>
-            <div class="time-slots-grid"></div>
-        </div>
-    </div>
-
-    <script src="script.js"></script>
-</body>
-</html>
-
-
-/////////
-
-
-
-
-
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Organizador de Partidos</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
-</head>
-<body>
-    <div class="container">
         <!-- Panel Admin (esquina superior derecha) -->
         <div class="admin-access">
             <input type="password" id="adminCode" placeholder="Código">
@@ -260,156 +59,148 @@
             <div class="availability-section">
                 <h2>⏰ Disponibilidad</h2>
                 <div class="compact-calendar">
-                <!-- Lunes -->
-                <div class="day-collapsible">
-                    <button class="collapse-btn">Lunes ▼</button>
-                    <div class="day-slots">
-                        <label><input type="checkbox" name="monday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="monday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="monday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="monday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="monday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="monday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="monday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="monday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="monday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="monday" value="22:00-23:00"> 22:00-23:00</label>
+                    <!-- Lunes -->
+                    <div class="day-collapsible">
+                        <button class="collapse-btn">Lunes ▼</button>
+                        <div class="day-slots">
+                            <label><input type="checkbox" name="monday" value="13:00-14:00"> 13:00-14:00</label>
+                            <label><input type="checkbox" name="monday" value="14:00-15:00"> 14:00-15:00</label>
+                            <label><input type="checkbox" name="monday" value="15:00-16:00"> 15:00-16:00</label>
+                            <label><input type="checkbox" name="monday" value="16:00-17:00"> 16:00-17:00</label>
+                            <label><input type="checkbox" name="monday" value="17:00-18:00"> 17:00-18:00</label>
+                            <label><input type="checkbox" name="monday" value="18:00-19:00"> 18:00-19:00</label>
+                            <label><input type="checkbox" name="monday" value="19:00-20:00"> 19:00-20:00</label>
+                            <label><input type="checkbox" name="monday" value="20:00-21:00"> 20:00-21:00</label>
+                            <label><input type="checkbox" name="monday" value="21:00-22:00"> 21:00-22:00</label>
+                            <label><input type="checkbox" name="monday" value="22:00-23:00"> 22:00-23:00</label>
+                        </div>
                     </div>
-                </div>
-                <!-- Martes -->
-                <div class="day-collapsible">
-                    <button class="collapse-btn">Martes ▼</button>
-                    <div class="day-slots">
-                        <label><input type="checkbox" name="tuesday" value="09:00-10:00"> 09:00-10:00</label>
-                        <label><input type="checkbox" name="tuesday" value="10:00-11:00"> 10:00-11:00</label>
-                        <label><input type="checkbox" name="tuesday" value="11:00-12:00"> 11:00-12:00</label>
-                        <label><input type="checkbox" name="tuesday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="tuesday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="tuesday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="tuesday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="tuesday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="tuesday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="tuesday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="tuesday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="tuesday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="tuesday" value="22:00-23:00"> 22:00-23:00</label>
+                    
+                    <!-- Martes -->
+                    <div class="day-collapsible">
+                        <button class="collapse-btn">Martes ▼</button>
+                        <div class="day-slots">
+                            <label><input type="checkbox" name="tuesday" value="09:00-10:00"> 09:00-10:00</label>
+                            <label><input type="checkbox" name="tuesday" value="10:00-11:00"> 10:00-11:00</label>
+                            <label><input type="checkbox" name="tuesday" value="11:00-12:00"> 11:00-12:00</label>
+                            <label><input type="checkbox" name="tuesday" value="13:00-14:00"> 13:00-14:00</label>
+                            <label><input type="checkbox" name="tuesday" value="14:00-15:00"> 14:00-15:00</label>
+                            <label><input type="checkbox" name="tuesday" value="15:00-16:00"> 15:00-16:00</label>
+                            <label><input type="checkbox" name="tuesday" value="16:00-17:00"> 16:00-17:00</label>
+                            <label><input type="checkbox" name="tuesday" value="17:00-18:00"> 17:00-18:00</label>
+                            <label><input type="checkbox" name="tuesday" value="18:00-19:00"> 18:00-19:00</label>
+                            <label><input type="checkbox" name="tuesday" value="19:00-20:00"> 19:00-20:00</label>
+                            <label><input type="checkbox" name="tuesday" value="20:00-21:00"> 20:00-21:00</label>
+                            <label><input type="checkbox" name="tuesday" value="21:00-22:00"> 21:00-22:00</label>
+                            <label><input type="checkbox" name="tuesday" value="22:00-23:00"> 22:00-23:00</label>
+                        </div>
                     </div>
-                </div>
-                <!-- Miércoles -->
-                <div class="day-collapsible">
-                    <button class="collapse-btn">Miércoles ▼</button>
-                    <div class="day-slots">
-                        <label><input type="checkbox" name="wednesday" value="09:00-10:00"> 09:00-10:00</label>
-                        <label><input type="checkbox" name="wednesday" value="10:00-11:00"> 10:00-11:00</label>
-                        <label><input type="checkbox" name="wednesday" value="11:00-12:00"> 11:00-12:00</label>
-                        <label><input type="checkbox" name="wednesday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="wednesday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="wednesday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="wednesday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="wednesday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="wednesday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="wednesday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="wednesday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="wednesday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="wednesday" value="22:00-23:00"> 22:00-23:00</label>
+                    
+                    <!-- Miércoles -->
+                    <div class="day-collapsible">
+                        <button class="collapse-btn">Miércoles ▼</button>
+                        <div class="day-slots">
+                            <label><input type="checkbox" name="wednesday" value="09:00-10:00"> 09:00-10:00</label>
+                            <label><input type="checkbox" name="wednesday" value="10:00-11:00"> 10:00-11:00</label>
+                            <label><input type="checkbox" name="wednesday" value="11:00-12:00"> 11:00-12:00</label>
+                            <label><input type="checkbox" name="wednesday" value="13:00-14:00"> 13:00-14:00</label>
+                            <label><input type="checkbox" name="wednesday" value="14:00-15:00"> 14:00-15:00</label>
+                            <label><input type="checkbox" name="wednesday" value="15:00-16:00"> 15:00-16:00</label>
+                            <label><input type="checkbox" name="wednesday" value="16:00-17:00"> 16:00-17:00</label>
+                            <label><input type="checkbox" name="wednesday" value="17:00-18:00"> 17:00-18:00</label>
+                            <label><input type="checkbox" name="wednesday" value="18:00-19:00"> 18:00-19:00</label>
+                            <label><input type="checkbox" name="wednesday" value="19:00-20:00"> 19:00-20:00</label>
+                            <label><input type="checkbox" name="wednesday" value="20:00-21:00"> 20:00-21:00</label>
+                            <label><input type="checkbox" name="wednesday" value="21:00-22:00"> 21:00-22:00</label>
+                            <label><input type="checkbox" name="wednesday" value="22:00-23:00"> 22:00-23:00</label>
+                        </div>
                     </div>
-                </div>
-                <!-- Jueves -->
-                <div class="day-collapsible">
-                    <button class="collapse-btn">Jueves ▼</button>
-                    <div class="day-slots">
-                        <label><input type="checkbox" name="thursday" value="09:00-10:00"> 09:00-10:00</label>
-                        <label><input type="checkbox" name="thursday" value="10:00-11:00"> 10:00-11:00</label>
-                        <label><input type="checkbox" name="thursday" value="11:00-12:00"> 11:00-12:00</label>
-                        <label><input type="checkbox" name="thursday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="thursday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="thursday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="thursday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="thursday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="thursday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="thursday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="thursday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="thursday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="thursday" value="22:00-23:00"> 22:00-23:00</label>
+                    
+                    <!-- Jueves -->
+                    <div class="day-collapsible">
+                        <button class="collapse-btn">Jueves ▼</button>
+                        <div class="day-slots">
+                            <label><input type="checkbox" name="thursday" value="09:00-10:00"> 09:00-10:00</label>
+                            <label><input type="checkbox" name="thursday" value="10:00-11:00"> 10:00-11:00</label>
+                            <label><input type="checkbox" name="thursday" value="11:00-12:00"> 11:00-12:00</label>
+                            <label><input type="checkbox" name="thursday" value="13:00-14:00"> 13:00-14:00</label>
+                            <label><input type="checkbox" name="thursday" value="14:00-15:00"> 14:00-15:00</label>
+                            <label><input type="checkbox" name="thursday" value="15:00-16:00"> 15:00-16:00</label>
+                            <label><input type="checkbox" name="thursday" value="16:00-17:00"> 16:00-17:00</label>
+                            <label><input type="checkbox" name="thursday" value="17:00-18:00"> 17:00-18:00</label>
+                            <label><input type="checkbox" name="thursday" value="18:00-19:00"> 18:00-19:00</label>
+                            <label><input type="checkbox" name="thursday" value="19:00-20:00"> 19:00-20:00</label>
+                            <label><input type="checkbox" name="thursday" value="20:00-21:00"> 20:00-21:00</label>
+                            <label><input type="checkbox" name="thursday" value="21:00-22:00"> 21:00-22:00</label>
+                            <label><input type="checkbox" name="thursday" value="22:00-23:00"> 22:00-23:00</label>
+                        </div>
                     </div>
-                </div>
-                <!-- Viernes -->
-                <div class="day-collapsible">
-                    <button class="collapse-btn">Viernes ▼</button>
-                    <div class="day-slots">
-                        <label><input type="checkbox" name="friday" value="09:00-10:00"> 09:00-10:00</label>
-                        <label><input type="checkbox" name="friday" value="10:00-11:00"> 10:00-11:00</label>
-                        <label><input type="checkbox" name="friday" value="11:00-12:00"> 11:00-12:00</label>
-                        <label><input type="checkbox" name="friday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="friday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="friday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="friday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="friday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="friday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="friday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="friday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="friday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="friday" value="22:00-23:00"> 22:00-23:00</label>
+                    
+                    <!-- Viernes -->
+                    <div class="day-collapsible">
+                        <button class="collapse-btn">Viernes ▼</button>
+                        <div class="day-slots">
+                            <label><input type="checkbox" name="friday" value="09:00-10:00"> 09:00-10:00</label>
+                            <label><input type="checkbox" name="friday" value="10:00-11:00"> 10:00-11:00</label>
+                            <label><input type="checkbox" name="friday" value="11:00-12:00"> 11:00-12:00</label>
+                            <label><input type="checkbox" name="friday" value="13:00-14:00"> 13:00-14:00</label>
+                            <label><input type="checkbox" name="friday" value="14:00-15:00"> 14:00-15:00</label>
+                            <label><input type="checkbox" name="friday" value="15:00-16:00"> 15:00-16:00</label>
+                            <label><input type="checkbox" name="friday" value="16:00-17:00"> 16:00-17:00</label>
+                            <label><input type="checkbox" name="friday" value="17:00-18:00"> 17:00-18:00</label>
+                            <label><input type="checkbox" name="friday" value="18:00-19:00"> 18:00-19:00</label>
+                            <label><input type="checkbox" name="friday" value="19:00-20:00"> 19:00-20:00</label>
+                            <label><input type="checkbox" name="friday" value="20:00-21:00"> 20:00-21:00</label>
+                            <label><input type="checkbox" name="friday" value="21:00-22:00"> 21:00-22:00</label>
+                            <label><input type="checkbox" name="friday" value="22:00-23:00"> 22:00-23:00</label>
+                        </div>
                     </div>
-                </div>
-                <!-- Sabado -->
-                <div class="day-collapsible">
-                    <button class="collapse-btn">Sábado ▼</button>
-                    <div class="day-slots">
-                        <label><input type="checkbox" name="saturday" value="09:00-10:00"> 09:00-10:00</label>
-                        <label><input type="checkbox" name="saturday" value="10:00-11:00"> 10:00-11:00</label>
-                        <label><input type="checkbox" name="saturday" value="11:00-12:00"> 11:00-12:00</label>
-                        <label><input type="checkbox" name="saturday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="saturday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="saturday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="saturday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="saturday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="saturday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="saturday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="saturday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="saturday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="saturday" value="22:00-23:00"> 22:00-23:00</label>
+                    
+                    <!-- Sábado -->
+                    <div class="day-collapsible">
+                        <button class="collapse-btn">Sábado ▼</button>
+                        <div class="day-slots">
+                            <label><input type="checkbox" name="saturday" value="09:00-10:00"> 09:00-10:00</label>
+                            <label><input type="checkbox" name="saturday" value="10:00-11:00"> 10:00-11:00</label>
+                            <label><input type="checkbox" name="saturday" value="11:00-12:00"> 11:00-12:00</label>
+                            <label><input type="checkbox" name="saturday" value="13:00-14:00"> 13:00-14:00</label>
+                            <label><input type="checkbox" name="saturday" value="14:00-15:00"> 14:00-15:00</label>
+                            <label><input type="checkbox" name="saturday" value="15:00-16:00"> 15:00-16:00</label>
+                            <label><input type="checkbox" name="saturday" value="16:00-17:00"> 16:00-17:00</label>
+                            <label><input type="checkbox" name="saturday" value="17:00-18:00"> 17:00-18:00</label>
+                            <label><input type="checkbox" name="saturday" value="18:00-19:00"> 18:00-19:00</label>
+                            <label><input type="checkbox" name="saturday" value="19:00-20:00"> 19:00-20:00</label>
+                            <label><input type="checkbox" name="saturday" value="20:00-21:00"> 20:00-21:00</label>
+                            <label><input type="checkbox" name="saturday" value="21:00-22:00"> 21:00-22:00</label>
+                            <label><input type="checkbox" name="saturday" value="22:00-23:00"> 22:00-23:00</label>
+                        </div>
                     </div>
-                </div>
-                <!-- Domingo -->
-                <div class="day-collapsible">
-                    <button class="collapse-btn">Domingo▼</button>
-                    <div class="day-slots">
-                        <label><input type="checkbox" name="sunday" value="09:00-10:00"> 09:00-10:00</label>
-                        <label><input type="checkbox" name="sunday" value="10:00-11:00"> 10:00-11:00</label>
-                        <label><input type="checkbox" name="sunday" value="11:00-12:00"> 11:00-12:00</label>
-                        <label><input type="checkbox" name="sunday" value="13:00-14:00"> 13:00-14:00</label>
-                        <label><input type="checkbox" name="sunday" value="14:00-15:00"> 14:00-15:00</label>
-                        <label><input type="checkbox" name="sunday" value="15:00-16:00"> 15:00-16:00</label>
-                        <label><input type="checkbox" name="sunday" value="16:00-17:00"> 16:00-17:00</label>
-                        <label><input type="checkbox" name="sunday" value="17:00-18:00"> 17:00-18:00</label>
-                        <label><input type="checkbox" name="sunday" value="18:00-19:00"> 18:00-19:00</label>
-                        <label><input type="checkbox" name="sunday" value="19:00-20:00"> 19:00-20:00</label>
-                        <label><input type="checkbox" name="sunday" value="20:00-21:00"> 20:00-21:00</label>
-                        <label><input type="checkbox" name="sunday" value="21:00-22:00"> 21:00-22:00</label>
-                        <label><input type="checkbox" name="sunday" value="22:00-23:00"> 22:00-23:00</label>
+                    
+                    <!-- Domingo -->
+                    <div class="day-collapsible">
+                        <button class="collapse-btn">Domingo ▼</button>
+                        <div class="day-slots">
+                            <label><input type="checkbox" name="sunday" value="09:00-10:00"> 09:00-10:00</label>
+                            <label><input type="checkbox" name="sunday" value="10:00-11:00"> 10:00-11:00</label>
+                            <label><input type="checkbox" name="sunday" value="11:00-12:00"> 11:00-12:00</label>
+                            <label><input type="checkbox" name="sunday" value="13:00-14:00"> 13:00-14:00</label>
+                            <label><input type="checkbox" name="sunday" value="14:00-15:00"> 14:00-15:00</label>
+                            <label><input type="checkbox" name="sunday" value="15:00-16:00"> 15:00-16:00</label>
+                            <label><input type="checkbox" name="sunday" value="16:00-17:00"> 16:00-17:00</label>
+                            <label><input type="checkbox" name="sunday" value="17:00-18:00"> 17:00-18:00</label>
+                            <label><input type="checkbox" name="sunday" value="18:00-19:00"> 18:00-19:00</label>
+                            <label><input type="checkbox" name="sunday" value="19:00-20:00"> 19:00-20:00</label>
+                            <label><input type="checkbox" name="sunday" value="20:00-21:00"> 20:00-21:00</label>
+                            <label><input type="checkbox" name="sunday" value="21:00-22:00"> 21:00-22:00</label>
+                            <label><input type="checkbox" name="sunday" value="22:00-23:00"> 22:00-23:00</label>
+                        </div>
                     </div>
                 </div>
             </div>
+
             <!-- Botones -->
             <button id="addPlayer">Agregar</button>
             <button id="resetData" style="display: none;">Reiniciar</button>
-        </div>
- <button id="addPlayer">Agregar</button>
-            <button id="resetData">Reiniciar</button>
-        </div>
-
-        <!-- Preferencias de Cancha -->
-        <div class="preferences-section">
-            <h2>🏟️ Preferencias de Cancha</h2>
-            <div id="venuesRanking">
-                <p>Ordena tus preferencias (1 = más preferido):</p>
-                <div class="venue-item" draggable="true" data-venue="Club Recrear">1. Club Recrear</div>
-                <div class="venue-item" draggable="true" data-venue="Dominica Sports">2. Dominica Sports</div>
-                <div class="venue-item" draggable="true" data-venue="TerraSoccer">3. TerraSoccer</div>
-                <div class="venue-item" draggable="true" data-venue="Massocer">4. Massocer</div>
-                <div class="venue-item" draggable="true" data-venue="Santa Julia">5. Santa Julia</div>
-            </div>
         </div>
 
         <!-- Lista de jugadores -->
@@ -430,5 +221,3 @@
     <script src="script.js"></script>
 </body>
 </html>
-
-
