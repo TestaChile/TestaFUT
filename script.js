@@ -1,12 +1,18 @@
-// Primero el listener del Modo Dios (fuera de DOMContentLoaded para mejor organización)
+// Función para activar/desactivar Modo Dios
 document.getElementById('godModeBtn')?.addEventListener('click', function() {
     if (document.getElementById('adminCode').value === '2565') {
-        document.getElementById('adminPanel').style.display = 'block';
-        document.getElementById('resetData').style.display = 'inline-block';
-        alert('Modo Dios Activado');
+        const adminPanel = document.getElementById('adminPanel');
+        adminPanel.style.display = adminPanel.style.display === 'block' ? 'none' : 'block';
+        renderAvailabilityGrid(); // Actualizar la vista
+        alert(adminPanel.style.display === 'block' ? 'Modo Dios ACTIVADO' : 'Modo Dios DESACTIVADO');
     } else {
         alert('Código incorrecto');
     }
+});
+
+// Función para mostrar/ocultar números de preferencia
+document.getElementById('togglePrefNumbers')?.addEventListener('click', function() {
+    renderAvailabilityGrid(); // Vuelve a renderizar la cuadrícula
 });
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -27,14 +33,16 @@ document.addEventListener('DOMContentLoaded', function() {
         localStorage.setItem('lastResetDay', today.toString());
     }
 
+    // Renderizar preferencias de cancha con botones de activación
+    renderVenuePreferences();
+
     // Inicializar SortableJS para las preferencias
     new Sortable(document.getElementById('venuesRanking'), {
         animation: 150,
         ghostClass: 'sortable-ghost',
+        handle: '.venue-item',
         onEnd: function() {
-            document.querySelectorAll('#venuesRanking .venue-item').forEach((item, index) => {
-                item.textContent = `${index + 1}. ${item.dataset.venue}`;
-            });
+            updateVenuePreferences();
         }
     });
 
@@ -84,15 +92,18 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         const preferences = {};
-        document.querySelectorAll('#venuesRanking .venue-item').forEach((item, index) => {
+        const activeVenues = [];
+        document.querySelectorAll('#venuesRanking .venue-item:not(.disabled)').forEach((item, index) => {
             preferences[item.dataset.venue] = index + 1;
+            activeVenues.push(item.dataset.venue);
         });
 
         players.push({ 
             name, 
             position,
             availability,
-            preferences
+            preferences,
+            activeVenues
         });
         
         localStorage.setItem('players', JSON.stringify(players));
@@ -166,7 +177,7 @@ document.addEventListener('DOMContentLoaded', function() {
     function updateGlobalPreferences() {
         venues.forEach(venue => {
             const venuePreferences = players
-                .filter(player => player.preferences)
+                .filter(player => player.preferences && player.activeVenues.includes(venue))
                 .map(player => player.preferences[venue] || 5);
             
             globalPreferences[venue] = venuePreferences.length > 0 
@@ -175,11 +186,50 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
+    // Renderizar preferencias de cancha
+    function renderVenuePreferences() {
+        const venuesRanking = document.getElementById('venuesRanking');
+        venuesRanking.innerHTML = '<p>Ordena tus preferencias (1 = más preferido):</p>';
+        
+        venues.forEach(venue => {
+            const venueItem = document.createElement('div');
+            venueItem.className = 'venue-item';
+            venueItem.dataset.venue = venue;
+            venueItem.textContent = venue;
+            
+            const toggleBtn = document.createElement('button');
+            toggleBtn.className = 'toggle-venue-btn';
+            toggleBtn.textContent = 'Desactivar';
+            toggleBtn.onclick = function() {
+                venueItem.classList.toggle('disabled');
+                this.textContent = venueItem.classList.contains('disabled') ? 'Activar' : 'Desactivar';
+                updateVenuePreferences();
+            };
+            
+            const container = document.createElement('div');
+            container.style.display = 'flex';
+            container.style.alignItems = 'center';
+            container.style.justifyContent = 'space-between';
+            container.appendChild(venueItem);
+            container.appendChild(toggleBtn);
+            
+            venuesRanking.appendChild(container);
+        });
+    }
+
+    // Actualizar preferencias al cambiar orden o estado
+    function updateVenuePreferences() {
+        document.querySelectorAll('#venuesRanking .venue-item:not(.disabled)').forEach((item, index) => {
+            item.textContent = `${index + 1}. ${item.dataset.venue}`;
+        });
+    }
+
     // Renderizar cuadrícula de disponibilidad
     function renderAvailabilityGrid() {
         const venuesSorted = [...venues].sort((a, b) => globalPreferences[a] - globalPreferences[b]);
         const days = ['monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday', 'sunday'];
         const dayNames = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes','Sábado','Domingo'];
+        const isAdminMode = document.getElementById('adminPanel').style.display === 'block';
 
         // Renderizar pestañas de canchas
         const venueTabs = document.querySelector('.venue-tabs');
@@ -226,7 +276,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 const availablePlayers = players.filter(player => 
                     player.availability.some(av => 
                         av.day === currentDay && av.time === slot
-                    )
+                    ) && 
+                    player.activeVenues.includes(currentVenue)
                 );
 
                 return `
@@ -236,9 +287,9 @@ document.addEventListener('DOMContentLoaded', function() {
                             ${availablePlayers.map(player => {
                                 const pref = player.preferences[currentVenue];
                                 return `
-                                    <div class="player-icon" 
-                                         title="${player.name} (Pref: ${pref})"
-                                         data-pref="${pref}">
+                                    <div class="player-icon ${player.position}" 
+                                         title="${player.name} (${player.position})${isAdminMode ? ' - Pref: ' + pref : ''}"
+                                         ${isAdminMode ? 'data-pref="' + pref + '"' : ''}>
                                         ${player.name.charAt(0)}
                                     </div>
                                 `;
@@ -261,21 +312,21 @@ document.addEventListener('DOMContentLoaded', function() {
                      '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
                      '22:00-23:00'],
             wednesday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
-                       '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
-                       '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
-                       '22:00-23:00'],
-            thursday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
                       '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
                       '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
                       '22:00-23:00'],
+            thursday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
+                     '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
+                     '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
+                     '22:00-23:00'],
             friday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
                    '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
                    '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
                    '22:00-23:00'],
             saturday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
-                      '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
-                      '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
-                      '22:00-23:00'],
+                     '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
+                     '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
+                     '22:00-23:00'],
             sunday: ['09:00-10:00', '10:00-11:00', '11:00-12:00', '13:00-14:00', 
                    '14:00-15:00', '15:00-16:00', '16:00-17:00', '17:00-18:00', 
                    '18:00-19:00', '19:00-20:00', '20:00-21:00', '21:00-22:00', 
