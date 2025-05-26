@@ -192,3 +192,41 @@ button {
     font-size: 12px;
     font-weight: bold;
 }
+/* Añadir al final del archivo */
+.admin-access {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.admin-access input {
+    padding: 5px;
+    width: 80px;
+}
+
+.admin-btn {
+    background: #d63031 !important;
+}
+.player-icon {
+    width: 24px;
+    height: 24px;
+    background: #3498db;
+    color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 10px;
+    font-weight: bold;
+    position: relative;
+}
+
+.player-icon::after {
+    content: attr(data-pref);
+    position: absolute;
+    bottom: -8px;
+    font-size: 8px;
+    color: #2c3e50;
+}
