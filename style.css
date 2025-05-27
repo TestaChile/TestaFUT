@@ -1,26 +1,83 @@
+:root {
+    --primary-green: #2b8a3e;
+    --secondary-green: #40c057;
+    --light-green: #d3f9d8;
+    --dark-green: #1a5632;
+    --gray-bg: #f8f9fa;
+    --gray-border: #e9ecef;
+    --gray-text: #495057;
+    --white: #ffffff;
+    --blue: #1971c2;
+    --orange: #e67700;
+    --red: #c92a2a;
+    --dark-gray: #343a40;
+}
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     margin: 0;
     padding: 20px;
-    background-color: #f4f4f9;
+    background-color: var(--gray-bg);
+    color: var(--gray-text);
 }
 
 .container {
     max-width: 1000px;
     margin: 0 auto;
-    background: white;
+    background: var(--white);
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    position: relative;
+}
+
+.logo-link {
+    position: absolute;
+    top: 15px;
+    left: 15px;
+}
+
+.logo {
+    height: 50px;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.header {
+    text-align: center;
+    margin-bottom: 20px;
+    padding-top: 20px;
+}
+
+h1 {
+    color: var(--primary-green);
+    margin-bottom: 10px;
+}
+
+.description {
+    font-size: 14px;
+    line-height: 1.5;
+    color: var(--gray-text);
+    max-width: 800px;
+    margin: 0 auto 20px;
+}
+
+.description em {
+    font-style: italic;
+    color: var(--dark-green);
 }
 
 .counter {
-    background: #2c3e50;
-    color: white;
-    padding: 10px;
-    border-radius: 5px;
+    background: var(--dark-green);
+    color: var(--white);
+    padding: 12px;
+    border-radius: 6px;
     text-align: center;
-    margin-bottom: 20px;
+    margin-bottom: 25px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 #matchStatus {
@@ -32,8 +89,9 @@ body {
 .form-section, .preferences-section, .players-section, .availability-grid {
     margin-bottom: 25px;
     padding: 20px;
-    border: 1px solid #e0e0e0;
+    border: 1px solid var(--gray-border);
     border-radius: 8px;
+    background: var(--white);
 }
 
 .compact-calendar {
@@ -48,7 +106,7 @@ body {
     width: 100%;
     padding: 8px;
     text-align: left;
-    background: #3498db;
+    background: var(--blue);
     color: white;
     border: none;
     border-radius: 0;
@@ -59,7 +117,7 @@ body {
 .day-slots {
     display: none;
     padding: 10px;
-    background: #f8f9fa;
+    background: var(--gray-bg);
     border-radius: 0 0 5px 5px;
     margin-bottom: 5px;
 }
@@ -92,49 +150,56 @@ body {
 
 .player-name.bold {
     font-weight: bold;
-    color: #2c3e50;
+    color: var(--dark-green);
 }
 
 .player-name.normal {
     font-weight: normal;
-    color: #7f8c8d;
+    color: var(--gray-text);
 }
 
 button {
     margin-top: 10px;
-    padding: 8px 15px;
+    padding: 10px 15px;
+    background: var(--secondary-green);
+    color: var(--white);
     border: none;
     border-radius: 5px;
     cursor: pointer;
+    transition: background 0.3s;
+}
+
+button:hover {
+    background: var(--primary-green);
 }
 
 #addPlayer {
-    background: #2ecc71;
+    background: var(--secondary-green);
     color: white;
 }
 
 #resetData {
-    background: #e74c3c;
+    background: var(--red);
     color: white;
 }
 
 #addPlayer:hover {
-    background: #27ae60;
+    background: var(--primary-green);
 }
 
 #resetData:hover {
-    background: #c0392b;
+    background: #a61e1e;
 }
 
 .collapse-btn:hover {
-    background: #2980b9;
+    background: #155a8a;
 }
 
 /* Nuevos estilos para preferencias */
 .venue-item {
     padding: 10px;
     margin: 5px 0;
-    background: #e9ecef;
+    background: var(--gray-border);
     cursor: move;
     border-radius: 4px;
     user-select: none;
@@ -154,21 +219,21 @@ button {
 
 .venue-tab, .day-tab {
     padding: 8px 12px;
-    background: #dee2e6;
+    background: var(--gray-border);
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
 .venue-tab.active, .day-tab.active {
-    background: #3498db;
+    background: var(--blue);
     color: white;
 }
 
 .time-slot-card {
     padding: 10px;
     margin: 5px;
-    background: #f1f8ff;
+    background: var(--light-green);
     border-radius: 4px;
     display: flex;
     justify-content: space-between;
@@ -183,36 +248,7 @@ button {
 .player-icon {
     width: 24px;
     height: 24px;
-    background: #3498db;
-    color: white;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 12px;
-    font-weight: bold;
-}
-/* Añadir al final del archivo */
-.admin-access {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    display: flex;
-    gap: 5px;
-}
-
-.admin-access input {
-    padding: 5px;
-    width: 80px;
-}
-
-.admin-btn {
-    background: #d63031 !important;
-}
-.player-icon {
-    width: 24px;
-    height: 24px;
-    background: #3498db;
+    background: var(--blue);
     color: white;
     border-radius: 50%;
     display: flex;
@@ -228,13 +264,14 @@ button {
     position: absolute;
     bottom: -8px;
     font-size: 8px;
-    color: #2c3e50;
+    color: var(--dark-green);
 }
+
 /* Colores por posición */
-.player-icon.arquero { background-color: #3498db; }
-.player-icon.defensa { background-color: #2ecc71; }
-.player-icon.mediocampista { background-color: #f1c40f; }
-.player-icon.delantero { background-color: #e74c3c; }
+.player-icon.arquero { background-color: var(--blue); }
+.player-icon.defensa { background-color: var(--primary-green); }
+.player-icon.mediocampista { background-color: var(--orange); }
+.player-icon.delantero { background-color: var(--red); }
 
 /* Estilo para venue-item desactivado */
 .venue-item.disabled {
@@ -256,5 +293,35 @@ button {
 }
 
 .toggle-venue-btn:hover {
-    background: #5a6268;
+    background: var(--dark-gray);
+}
+
+.admin-access {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    display: flex;
+    gap: 5px;
+}
+
+.admin-access input {
+    padding: 5px;
+    width: 80px;
+}
+
+.admin-btn {
+    background: var(--dark-gray) !important;
+}
+
+.admin-btn:hover {
+    background: #212529 !important;
+}
+
+.footer-note {
+    font-size: 8px;
+    text-align: center;
+    margin-top: 30px;
+    color: var(--gray-text);
+    padding-top: 10px;
+    border-top: 1px solid var(--gray-border);
 }
