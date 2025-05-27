@@ -198,10 +198,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Renderizar preferencias de cancha
+    // Renderizar preferencias de cancha (mejorada con descripción clara)
     function renderVenuePreferences() {
         const venuesRanking = document.getElementById('venuesRanking');
-        venuesRanking.innerHTML = '<p>Ordena tus preferencias (1 = más preferido):</p>';
+        venuesRanking.innerHTML = `
+            <p class="preferences-description">
+                Ordena cada recinto con el mouse según tu preferencia de cancha. Siendo el (1) el de mayor preferencia. 
+                Puedes desactivar la consideración de un recinto con el botón activar/desactivar.
+            </p>
+        `;
         
         venues.forEach(venue => {
             const venueItem = document.createElement('div');
