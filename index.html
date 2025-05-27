@@ -3,13 +3,18 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Organizador de Partidos</title>
+    <title>Testa Sports</title>
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.14.0/Sortable.min.js"></script>
 </head>
 <body>
     <div class="container">
+        <!-- Logo en esquina superior izquierda -->
+        <a href="https://linktr.ee/testa.cl" class="logo-link">
+            <img src="LOGO_TESTA.jpg" alt="Testa Sports" class="logo">
+        </a>
+
         <!-- Panel Admin (esquina superior derecha) -->
         <div class="admin-access">
             <input type="password" id="adminCode" placeholder="Código">
@@ -20,7 +25,15 @@
             <button id="togglePrefNumbers" class="admin-btn">Mostrar/Ocultar Preferencias</button>
         </div>
 
-        <h1>⚽ Organizador de Partidos</h1>
+        <!-- Título y descripción -->
+        <div class="header">
+            <h1>⚽ Testa Sports</h1>
+            <p class="description">
+                ¡Hola, bienvenido a Testa Sports! Esta es una aplicación que desarrollé con IA para optimizar la organización de pichangas de futbolito.<br>
+                Por favor, es <em>muy importante que hagas estrictamente y sin errores</em> lo que se solicita para agregarte como jugador. 
+                Fallas de error al agregar, de duplicación o equivocaciones al seleccionar horarios no son posibles de corregir por ahora.
+            </p>
+        </div>
         
         <!-- Contador -->
         <div class="counter">
@@ -47,12 +60,11 @@
             <div class="preferences-section">
                 <h2>🏟️ Preferencia de Cancha</h2>
                 <div id="venuesRanking">
-                    <p>Ordena tus preferencias (1 = más preferido):</p>
-                    <div class="venue-item" draggable="true" data-venue="Club Recrear">1. Club Recrear</div>
-                    <div class="venue-item" draggable="true" data-venue="Dominica Sports">2. Dominica Sports</div>
-                    <div class="venue-item" draggable="true" data-venue="TerraSoccer">3. TerraSoccer</div>
-                    <div class="venue-item" draggable="true" data-venue="Massocer">4. Massocer</div>
-                    <div class="venue-item" draggable="true" data-venue="Santa Julia">5. Santa Julia</div>
+                    <p class="preferences-description">
+                        Ordena cada recinto con el mouse según tu preferencia de cancha. Siendo el (1) el de mayor preferencia. 
+                        Puedes desactivar la consideración de un recinto con el botón activar/desactivar.
+                    </p>
+                    <!-- Las canchas se generarán dinámicamente con JavaScript -->
                 </div>
             </div>
 
@@ -216,6 +228,11 @@
             <div class="venue-tabs"></div>
             <div class="day-tabs"></div>
             <div class="time-slots-grid"></div>
+        </div>
+
+        <!-- Texto final -->
+        <div class="footer-note">
+            Por el momento, la confirmación del partido pasa por confirmación manual (ósea, por el grupo de WSP de Testa Sports)
         </div>
     </div>
 
